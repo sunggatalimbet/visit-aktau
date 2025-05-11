@@ -1,0 +1,47 @@
+---
+import { Image } from 'astro:assets';
+import heroBackground from '../images/hero-background.png';
+---
+
+<section class="relative w-full">
+  <Image
+    src={heroBackground}
+    alt="Mangistau landscape"
+    class="absolute inset-0 w-full h-full object-cover"
+    quality={100}
+  />
+
+  <div
+    class="relative z-10 h-full flex flex-col justify-center px-6 lg:px-12 max-w-7xl mx-auto py-32"
+  >
+    <h1
+      class="text-white uppercase w-4/5 text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-medium leading-[103%] tracking-[-1.1%] mb-6"
+    >
+      Путешествия по Мангистау — там, где Каспий раскрывает свои тайны
+    </h1>
+
+    <p class="text-white md:text-xl lg:text-2xl max-w-1/2 mb-8 leading-[150%] tracking-[-1.1%]">
+      Добро пожаловать в место, где каждый закат неповторим, а приключения начинаются за горизонтом!
+    </p>
+
+    <div>
+      <a
+        href="#destinations"
+        class="inline-block uppercase text-white border-2 border-white rounded-full px-8 py-3 text-lg font-medium hover:bg-white hover:text-gray-800 transition-colors duration-300"
+      >
+        Что посетить?
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Optional: Add some custom styles for enhanced visual appeal */
+  h1 {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  p {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+</style>
