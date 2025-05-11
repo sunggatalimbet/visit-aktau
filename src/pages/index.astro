@@ -1,16 +1,34 @@
 ---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import { Image } from 'astro:assets';
+import heroBackground from '../images/hero-background.png';
 
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Туристический сайт города Актау' } = Astro.props;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="min-h-screen w-full">
+    <Header />
+    <Image src={heroBackground} alt="Hero background" class="h-screen object-cover" />
+
+    <main>
+      <slot />
+    </main>
+
+    <!-- You can add a footer component here -->
+  </body>
 </html>
