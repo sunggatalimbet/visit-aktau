@@ -1,0 +1,58 @@
+---
+import type { SelectorItem } from '../shared/types';
+interface Props {
+  selectors: Array<SelectorItem>;
+}
+const { selectors } = Astro.props;
+---
+
+<div class="flex flex-row gap-4 items-center selector-container">
+  {
+    selectors.map((s, index) => {
+      const baseClasses =
+        'cursor-pointer uppercase border-2 border-white rounded-full px-8 py-3 text-lg font-medium transition-colors duration-300';
+      const defaultClasses = s.active ? 'bg-white text-[#3D3F46]' : 'text-white';
+
+      return (
+        <button
+          class={`${baseClasses} ${defaultClasses}`}
+          data-index={index}
+          data-active={s.active}
+        >
+          {s.text}
+        </button>
+      );
+    })
+  }
+</div>
+
+<!-- This is should be uncommented once logic for toggling selectors appears -->
+<!-- <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.selector-container button');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Reset all buttons to inactive
+        buttons.forEach(btn => {
+          (btn as HTMLElement).dataset.active = 'false';
+          if (!btn.classList.contains('bg-white') || !(btn as HTMLElement).dataset.default) {
+            btn.classList.remove('bg-white', 'text-gray-800');
+            btn.classList.add('text-white');
+          }
+        });
+
+        // Set clicked button to active
+        (button as HTMLElement).dataset.active = 'true';
+        button.classList.add('bg-white', 'text-gray-800');
+        button.classList.remove('text-white');
+
+        // You can add an event dispatch here if you need to communicate this change
+        const event = new CustomEvent('selectorChanged', {
+          detail: { index: parseInt((button as HTMLElement).dataset.index || '0') },
+        });
+        document.dispatchEvent(event);
+      });
+    });
+  });
+</script> -->

@@ -1,0 +1,32 @@
+---
+import { Image } from 'astro:assets';
+import heroBackground from '../images/hero-background.jpg';
+
+import Title from '../components/Title.astro';
+import Subtitle from '../components/Subtitle.astro';
+import Button from '../components/Button.astro';
+---
+
+<section class="relative w-full">
+  <Image
+    src={heroBackground}
+    alt="Mangistau landscape image"
+    class="absolute inset-0 w-full h-full max-h-[1083px] object-cover object-[80%_20%]"
+    quality={100}
+  />
+
+  <div class="relative z-10 gap-6 flex flex-col justify-center px-6 lg:px-10 max-w-7xl py-32">
+    <div class="w-full sm:w-4/5">
+      <Title
+        text={'Путешествия по Мангистау — там, где Каспий раскрывает свои тайны'}
+        type="hero"
+      />
+    </div>
+
+    <Subtitle
+      text={'Добро пожаловать в место, где каждый закат неповторим, а приключения начинаются за горизонтом!'}
+    />
+
+    <Button text={'Что посетить?'} link="#destinations" />
+  </div>
+</section>

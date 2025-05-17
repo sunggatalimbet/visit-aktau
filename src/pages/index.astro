@@ -1,7 +1,8 @@
 ---
 import '../styles/global.css';
-import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
+import Header from '../sections/Header.astro';
+import Hero from '../sections/Hero.astro';
+import Guider from '../sections/Guider.astro';
 
 interface Props {
   title: string;
@@ -22,9 +23,9 @@ const { title, description = 'Туристический сайт города �
   </head>
   <body class="min-h-screen w-full">
     <Header />
-    <Hero />
-    <main>
-      <slot />
+    <main class="mx-auto max-w-[1920px]">
+      <Hero />
+      <Guider />
     </main>
 
     <!-- You can add a footer component here -->

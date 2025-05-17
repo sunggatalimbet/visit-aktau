@@ -1,0 +1,11 @@
+---
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+---
+
+<h2 class="text-white md:text-xl lg:text-2xl max-w-1/2 leading-[150%] tracking-[-1.1%]">
+  {text}
+</h2>
