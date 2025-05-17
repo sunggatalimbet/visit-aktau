@@ -1,4 +1,5 @@
-/* First, define your font faces */
+@import 'tailwindcss';
+
 @font-face {
   font-family: 'SF Pro Display';
   src: url('/fonts/SF-Pro-Display-Regular.otf') format('opentype');
@@ -14,6 +15,3 @@
   font-style: normal;
   font-display: swap;
 }
-
-/* Import Tailwind CSS */
-@import 'tailwindcss';

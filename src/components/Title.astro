@@ -1,14 +1,13 @@
 ---
 interface Props {
   text: string;
-  type: 'hero' | 'aside' | 'default';
+  type: 'hero' | 'default';
 }
 
 const { text, type } = Astro.props;
 
 const textSizeClass = {
   hero: 'text-5xl lg:text-6xl xl:text-7xl',
-  aside: 'text-5xl lg:text-5xl',
   default: 'text-4xl md:text-5xl 2xl:text-6xl',
 }[type];
 ---
