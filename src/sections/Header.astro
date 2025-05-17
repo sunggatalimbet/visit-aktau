@@ -34,13 +34,13 @@ const socialLinks = [
 
 <header
   id="main-header-outer"
-  class="w-full fixed left-1/2 transform -translate-x-1/2 mx-auto z-50 transition-all duration-300 bg-transparent"
+  class="fixed left-1/2 z-50 mx-auto w-full -translate-x-1/2 transform bg-transparent transition-all duration-300"
 >
   <div
     id="main-header"
-    class="border-2 border-white rounded-full max-w-5xl h-16 mx-3 lg:mx-auto my-3"
+    class="mx-3 my-3 h-16 max-w-5xl rounded-full border-2 border-white lg:mx-auto"
   >
-    <nav class="flex items-center justify-between py-3 px-8">
+    <nav class="flex items-center justify-between px-8 py-3">
       <!-- Logo -->
       <div class="flex-shrink-0">
         <a href="/" class="block">
@@ -49,12 +49,12 @@ const socialLinks = [
       </div>
 
       <!-- Desktop Navigation -->
-      <div class="hidden md:flex items-center justify-center space-x-12 lg:space-x-20">
+      <div class="hidden items-center justify-center space-x-12 md:flex lg:space-x-20">
         {
-          navLinks.map(link => (
+          navLinks.map((link) => (
             <a
               href={link.href}
-              class="text-white hover:text-gray-200 transition-colors text-lg font-medium"
+              class="text-lg font-medium text-white transition-colors hover:text-gray-200"
             >
               {link.text}
             </a>
@@ -63,23 +63,23 @@ const socialLinks = [
       </div>
 
       <!-- Social Icons - Desktop -->
-      <div class="hidden md:flex items-center gap-3">
+      <div class="hidden items-center gap-3 md:flex">
         {
-          socialLinks.map(social => (
+          socialLinks.map((social) => (
             <a
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-white hover:text-gray-200 transition-colors"
+              class="text-white transition-colors hover:text-gray-200"
             >
-              <Image src={social.icon} alt={social.alt} class="w-8 h-8" />
+              <Image src={social.icon} alt={social.alt} class="h-8 w-8" />
             </a>
           ))
         }
       </div>
 
       <!-- Mobile Menu Button -->
-      <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+      <button id="mobile-menu-button" class="text-white focus:outline-none md:hidden">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6"
@@ -101,10 +101,10 @@ const socialLinks = [
 <!-- Mobile Menu -->
 <div
   id="mobile-menu"
-  class="fixed top-0 right-0 w-64 bg-white h-full transform translate-x-full transition-transform duration-300 ease-in-out z-50"
+  class="fixed top-0 right-0 z-50 h-full w-64 translate-x-full transform bg-white transition-transform duration-300 ease-in-out"
 >
   <div class="p-5">
-    <button id="close-menu-button" class="text-black focus:outline-none absolute top-4 right-4">
+    <button id="close-menu-button" class="absolute top-4 right-4 text-black focus:outline-none">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-6 w-6"
@@ -122,21 +122,21 @@ const socialLinks = [
 
     <div class="mt-10 flex flex-col space-y-6">
       {
-        navLinks.map(link => (
-          <a href={link.href} class="text-black hover:text-black/80 transition-colors">
+        navLinks.map((link) => (
+          <a href={link.href} class="text-black transition-colors hover:text-black/80">
             {link.text}
           </a>
         ))
       }
 
-      <div class="pt-6 border-t border-gray-600">
+      <div class="border-t border-gray-600 pt-6">
         {
-          socialLinks.map(social => (
+          socialLinks.map((social) => (
             <a
               href={social.href}
-              class="flex items-center text-black hover:text-black/80 transition-colors mb-4"
+              class="mb-4 flex items-center text-black transition-colors hover:text-black/80"
             >
-              <Image src={social.mobIcon} alt={social.alt} class="w-6 h-6 mr-3" />
+              <Image src={social.mobIcon} alt={social.alt} class="mr-3 h-6 w-6" />
               {social.label}
             </a>
           ))
@@ -188,7 +188,7 @@ const socialLinks = [
   // Close mobile menu when clicking on a link
   if (mobileMenu) {
     const mobileLinks = mobileMenu.querySelectorAll('a');
-    mobileLinks.forEach(link => {
+    mobileLinks.forEach((link) => {
       link.addEventListener('click', () => {
         mobileMenu.classList.remove('translate-x-0');
         mobileMenu.classList.add('translate-x-full');

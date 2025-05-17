@@ -10,12 +10,12 @@ import tuzbairImage from '../images/tuzbair-image.jpg';
 import { routemapSelectors } from '../shared/constants';
 ---
 
-<section class="relative w-full h-full max-h-[1080px] overflow-hidden py-10">
+<section class="relative h-full max-h-[1080px] w-full overflow-hidden py-10">
   <div class="absolute inset-0 scale-[1.20]">
     <Image
       src={routemapBackgroundImage}
       alt="Mangistau landscape"
-      class="w-full h-full max-h-[1080px] object-cover object-[70%_30%] filter blur-lg"
+      class="h-full max-h-[1080px] w-full object-cover object-[70%_30%] blur-lg filter"
       quality={100}
     />
   </div>
@@ -23,10 +23,10 @@ import { routemapSelectors } from '../shared/constants';
   <Image
     src={routemapImage}
     alt="Mangistau route map"
-    class="hidden lg:block absolute top-0 bottom-0 -right-20 xl:right-0 z-20 h-full object-contain object-top-right"
+    class="absolute top-0 -right-20 bottom-0 z-20 hidden h-full object-contain object-top-right lg:block xl:right-0"
   />
 
-  <div class="h-full relative flex flex-col justify-between z-30 gap-20 px-10 py-6">
+  <div class="relative z-30 flex h-full flex-col justify-between gap-20 px-10 py-6">
     <div class="flex flex-col gap-6">
       <div class="max-w-md lg:max-w-xl xl:max-w-2xl">
         <Title text={'Путеводитель по лучшим локациям'} type="default" />
@@ -36,6 +36,7 @@ import { routemapSelectors } from '../shared/constants';
       </div>
       <div class="max-w-xl">
         <Description
+          styles="uppercase"
           text={'Исследуйте достопримечательности, маршруты и природные чудеса региона на интерактивной карте — планируйте своё путешествие по Мангистау с лёгкостью и вдохновением'}
         />
       </div>
@@ -45,17 +46,17 @@ import { routemapSelectors } from '../shared/constants';
       <Image
         src={tuzbairImage}
         alt="Mangistau landscape"
-        class="size-full lg:max-w-[180px] xl:max-w-[210px] 2xl:max-w-[240px] aspect-square rounded-[20px]"
+        class="aspect-square size-full rounded-[20px] lg:max-w-[180px] xl:max-w-[210px] 2xl:max-w-[240px]"
       />
       <Image
         src={tuzbairImage}
         alt="Mangistau landscape"
-        class="size-full lg:max-w-[180px] xl:max-w-[210px] 2xl:max-w-[240px] aspect-square rounded-[20px]"
+        class="aspect-square size-full rounded-[20px] lg:max-w-[180px] xl:max-w-[210px] 2xl:max-w-[240px]"
       />
       <Image
         src={tuzbairImage}
         alt="Mangistau landscape"
-        class="size-full lg:max-w-[180px] xl:max-w-[210px] 2xl:max-w-[240px] aspect-square rounded-[20px]"
+        class="aspect-square size-full rounded-[20px] lg:max-w-[180px] xl:max-w-[210px] 2xl:max-w-[240px]"
       />
     </div>
   </div>

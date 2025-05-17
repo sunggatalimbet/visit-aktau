@@ -1,0 +1,56 @@
+---
+import Title from '../components/Title.astro';
+import Description from '../components/Description.astro';
+
+import { Image } from 'astro:assets';
+import placesImage3 from '../images/places-image-3.jpg';
+
+// Dummy images for the bottom row (replace with your own if needed)
+import higlightsImage1 from '../images/highlights-image-1.jpg';
+import higlightsImage2 from '../images/highlights-image-2.jpg';
+import higlightsImage3 from '../images/highlights-image-3.jpg';
+import Selectors from '../components/Selectors.astro';
+
+import { routemapSelectors } from '../shared/constants';
+---
+
+<div class="flex h-screen w-screen bg-[#222]">
+  <div class="relative flex min-w-0 flex-1 items-end justify-start overflow-hidden">
+    <Image
+      src={higlightsImage1}
+      alt="Актау — Очарование Прикаспийского побережья"
+      class="h-full min-h-full w-full object-cover"
+    />
+    <div class="absolute bottom-8 left-8">
+      <Title text={'Актау — очарование прикаспийского побережья'} type="hero" />
+    </div>
+  </div>
+
+  <div class="relative flex w-1/2 flex-col justify-start gap-8 bg-[#3D3F46] px-8 py-12 text-white">
+    <div class="flex flex-col gap-2">
+      <Title text={'Город, не похожий ни на один другой'} type="aside" />
+      <Selectors selectors={routemapSelectors} />
+    </div>
+
+    <Description
+      text={'Актау - это единственный город с улицами без названий. Вместо них, используются микрорайоны и номера домов'}
+    />
+    <div class="flex flex-row items-center gap-3">
+      <Image
+        src={higlightsImage1}
+        alt="Mangistau landscape"
+        class="aspect-square size-full rounded-[20px] lg:max-w-[180px] xl:max-w-[210px] 2xl:max-w-[240px]"
+      />
+      <Image
+        src={higlightsImage2}
+        alt="Mangistau landscape"
+        class="aspect-square size-full rounded-[20px] lg:max-w-[180px] xl:max-w-[210px] 2xl:max-w-[240px]"
+      />
+      <Image
+        src={higlightsImage3}
+        alt="Mangistau landscape"
+        class="aspect-square size-full rounded-[20px] lg:max-w-[180px] xl:max-w-[210px] 2xl:max-w-[240px]"
+      />
+    </div>
+  </div>
+</div>

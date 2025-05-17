@@ -1,11 +1,12 @@
 ---
 interface Props {
   text: string;
+  styles?: string;
 }
 
-const { text } = Astro.props;
+const { text, styles } = Astro.props;
 ---
 
-<p class="text-[25px] leading-[103%] tracking-[-1.1%] uppercase text-white">
+<p class={`text-[25px] leading-[103%] tracking-[-1.1%] text-white ${styles}`}>
   {text}
 </p>
