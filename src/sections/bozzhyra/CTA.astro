@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets';
+import Title from '../../components/Title.astro';
+import Button from '../../components/Button.astro';
+import bozzhyraImage from '../../images/bozzhyra.jpg';
+
+interface Props {
+  title?: string;
+}
+
+const { title = 'Бозжыра — прикосновение к вечности' } = Astro.props;
+---
+
+<section class="relative w-full">
+  <Image
+    src={bozzhyraImage}
+    alt="Bozzhyra image"
+    class="h-[368px] w-full scale-[101%] object-cover lg:h-[520px]"
+    quality={100}
+  />
+
+  <div class="absolute inset-0 bg-black/20"></div>
+
+  <div class="absolute inset-0 mx-auto flex flex-col items-center justify-center gap-6 px-4">
+    <div class="max-w-md sm:max-w-xl">
+      <Title text={title} type="default" className="text-center" />
+    </div>
+    <Button text={'Построить маршрут'} link="#destinations" />
+  </div>
+</section>

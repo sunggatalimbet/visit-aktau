@@ -1,0 +1,51 @@
+---
+import '../styles/global.css';
+import Header from '../sections/Header.astro';
+import BozzhyraHero from '../sections/bozzhyra/Hero.astro';
+import BozzhyraPlaces from '../sections/bozzhyra/Places.astro';
+import BozzhyraCTA from '../sections/bozzhyra/CTA.astro';
+import Footer from '../sections/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title = 'Бозжыра - Мангистау',
+  description = 'Откройте для себя уникальные ландшафты Бозжыра в Мангистау',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      body {
+        font-family:
+          'SF Pro Display',
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen w-full">
+    <Header />
+    <main class="mx-auto w-full max-w-[1920px]">
+      <BozzhyraHero />
+      <BozzhyraPlaces />
+      <BozzhyraCTA />
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -1,15 +1,15 @@
 ---
 import { Image } from 'astro:assets';
-import heroBackground from '../images/hero-background.jpg';
+import bozzhyraHeroBackground from '../../images/bozzhyra-image.jpg';
 
-import Title from '../components/Title.astro';
-import Subtitle from '../components/Subtitle.astro';
-import Button from '../components/Button.astro';
+import Title from '../../components/Title.astro';
+import Subtitle from '../../components/Subtitle.astro';
+import Button from '../../components/Button.astro';
 ---
 
 <section class="relative h-screen w-full overflow-hidden sm:h-auto">
   <Image
-    src={heroBackground}
+    src={bozzhyraHeroBackground}
     alt="Mangistau landscape image"
     class="absolute inset-0 h-full max-h-[1083px] w-full scale-150 object-cover object-top pt-20 sm:scale-100 sm:object-[80%_20%] sm:pt-0"
     quality={100}
@@ -20,10 +20,7 @@ import Button from '../components/Button.astro';
   >
     <div class="flex flex-1 flex-col justify-center gap-4">
       <div class="w-full sm:w-4/5">
-        <Title
-          text={'Путешествия по Мангистау — там, где Каспий раскрывает свои тайны'}
-          type="hero"
-        />
+        <Title text={'Бозжыра - Марсианский пейзаж Мангистау'} type="hero" />
       </div>
 
       <Subtitle
