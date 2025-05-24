@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import placesImage1 from '../images/places-image-1.jpg';
+import placesImage2 from '../images/places-image-2.jpg';
+import placesImage3 from '../images/places-image-3.jpg';
+
+const placeCards = [
+  {
+    image: placesImage1,
+    alt: 'Маяк и якорь',
+    title: 'Маяк и якорь',
+  },
+  {
+    image: placesImage2,
+    alt: 'Набережная Актау',
+    title: 'Набережная Актау',
+  },
+  {
+    image: placesImage3,
+    alt: 'Скальная тропа',
+    title: 'Скальная тропа',
+  },
+];
+---
+
+<section>
+  <div
+    class="flex w-full flex-col items-center justify-center gap-6 bg-white px-4 py-16 text-center"
+  >
+    <div class="flex flex-col gap-4">
+      <h1
+        class={`text-[#3D3F46] uppercase w-full text-4xl md:text-5xl 2xl:text-6xl font-medium leading-[103%] tracking-[-1.1%]`}
+      >
+        Не пропусти лучшие места Актау!
+      </h1>
+
+      <h2 class="mx-auto max-w-[700px] tracking-[-1.1%] text-[#3D3F46] md:text-xl lg:text-2xl">
+        Открой для себя живописные пляжи, загадочные скалы и уникальные достопримечательности этого
+        приморского города
+      </h2>
+    </div>
+
+    <button class="inline-flex cursor-pointer">
+      <a
+        class="rounded-full border-[#3D3F46] bg-[#3D3F46] px-8 py-3 text-lg font-medium text-white uppercase transition-colors duration-300 hover:text-white"
+      >
+        Что посетить?
+      </a>
+    </button>
+  </div>
+
+  <div class="grid w-full grid-cols-1 md:grid-cols-3">
+    {
+      placeCards.map((place) => (
+        <div class="relative overflow-hidden">
+          <Image
+            src={place.image}
+            alt={place.alt}
+            width={691}
+            height={666}
+            class="h-full w-full object-fill"
+            quality={100}
+          />
+          <div class="absolute bottom-0 left-0 p-6">
+            <h3 class="text-2xl font-medium text-white uppercase">{place.title}</h3>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
