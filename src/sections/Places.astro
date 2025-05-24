@@ -1,25 +1,44 @@
 ---
 import Title from '../components/Title.astro';
 import Description from '../components/Description.astro';
+import ImageSlider from '../components/ImageSlider.astro';
 
 import { Image } from 'astro:assets';
-import placesImage3 from '../images/places-image-3.jpg';
 
-// Dummy images for the bottom row (replace with your own if needed)
 import higlightsImage1 from '../images/highlights-image-1.jpg';
 import higlightsImage2 from '../images/highlights-image-2.jpg';
 import higlightsImage3 from '../images/highlights-image-3.jpg';
 import Selectors from '../components/Selectors.astro';
 
 import { routemapSelectors } from '../shared/constants';
+
+const placesImages = [
+  {
+    src: higlightsImage1,
+    alt: 'Mangistau landscape',
+    title: 'АКТАУ - ОЧАРОВАНИЕ ПРИКАСПИЙСКОГО ПОБЕРЕЖЬЯ',
+  },
+  {
+    src: higlightsImage2,
+    alt: 'Mangistau landscape',
+    title: 'АКТАУ - ОЧАРОВАНИЕ ПРИКАСПИЙСКОГО ПОБЕРЕЖЬЯ',
+  },
+  {
+    src: higlightsImage3,
+    alt: 'Mangistau landscape',
+    title: 'АКТАУ - ОЧАРОВАНИЕ ПРИКАСПИЙСКОГО ПОБЕРЕЖЬЯ',
+  },
+];
 ---
 
-<div class="flex h-auto w-full flex-col-reverse bg-[#222] lg:h-[1080px] lg:flex-row">
-  <div class="relative flex h-[400px] w-full items-end justify-end lg:h-auto lg:w-1/2">
+<div class="flex h-auto w-full flex-col bg-[#3D3F46] lg:h-[1080px] lg:flex-row">
+  <div
+    class="relative hidden h-full w-full items-end justify-end md:flex md:h-[720px] lg:h-auto lg:w-1/2"
+  >
     <Image
       src={higlightsImage1}
       alt="Актау — Очарование Прикаспийского побережья"
-      class="absolute hidden h-full min-h-full w-full object-cover lg:block"
+      class="absolute hidden h-full w-full object-cover md:block"
     />
     <div class="z-20 pb-6 pl-6 lg:pb-12 lg:pl-10">
       <Title text={'Актау — очарование прикаспийского побережья'} type="hero" />
@@ -27,38 +46,20 @@ import { routemapSelectors } from '../shared/constants';
   </div>
 
   <div
-    class="flex w-full flex-col justify-between gap-6 bg-[#3D3F46] px-6 py-8 text-white lg:w-1/2 lg:gap-8 lg:px-8 lg:py-12"
+    class="flex h-full flex-col justify-between gap-20 px-4 py-12 text-white md:px-8 md:py-12 lg:w-1/2"
   >
-    <div class="flex flex-col gap-4 lg:gap-6">
-      <h1
-        class="w-full text-3xl leading-[103%] font-medium tracking-[-1.1%] text-white uppercase lg:text-4xl"
-      >
-        Город, не похожий ни на один другой
-      </h1>
-      <div class="flex flex-col-reverse gap-4 lg:flex-col lg:gap-6">
+    <div class="flex flex-col gap-6">
+      <Title text={'Город, не похожий ни на один другой'} type="default" />
+      <div class="max-w-lg">
         <Selectors selectors={routemapSelectors} />
+      </div>
+      <div class="max-w-xl">
         <Description
           text={'Актау - это единственный город с улицами без названий. Вместо них, используются микрорайоны и номера домов'}
         />
       </div>
     </div>
 
-    <div class="grid grid-cols-1 gap-3 lg:grid-cols-3">
-      <Image
-        src={higlightsImage1}
-        alt="Mangistau landscape"
-        class="aspect-square w-full rounded-[20px] object-cover"
-      />
-      <Image
-        src={higlightsImage2}
-        alt="Mangistau landscape"
-        class="aspect-square w-full rounded-[20px] object-cover"
-      />
-      <Image
-        src={higlightsImage3}
-        alt="Mangistau landscape"
-        class="aspect-square w-full rounded-[20px] object-cover"
-      />
-    </div>
+    <ImageSlider images={placesImages} sliderId="places-slider" />
   </div>
 </div>

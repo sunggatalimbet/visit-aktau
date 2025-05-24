@@ -1,0 +1,110 @@
+---
+import { Image } from 'astro:assets';
+import tuzbairImage from '../images/tuzbair-image.jpg';
+import bozzhyraImage from '../images/bozzhyra.jpg';
+
+import Title from '../components/Title.astro';
+import Button from '../components/Button.astro';
+import Description from '../components/Description.astro';
+---
+
+<section class="relative w-full bg-[#3D3F46]">
+  <div
+    class="relative z-10 mx-auto flex w-full flex-col items-center justify-center gap-6 px-4 py-16 text-center sm:max-w-7xl lg:px-10 lg:py-24"
+  >
+    <div>
+      <Title text={'Мангистау — там, где земля встречает небо'} type={'hero'} />
+    </div>
+
+    <div>
+      <Description
+        text={'Открой для себя завораживающие пейзажи Мангистау — край древних каньонов, мистических скал и бескрайних прибрежных просторов'}
+      />
+    </div>
+
+    <Button text={'Узнать подробнее'} link="#learn-more" />
+  </div>
+
+  <div class="hidden grid-cols-1 md:grid md:grid-cols-2">
+    <div class="relative h-[500px] overflow-hidden lg:h-[600px]">
+      <Image
+        src={bozzhyraImage}
+        alt="Гора Бозжыра"
+        class="absolute inset-0 h-full w-full"
+        quality={100}
+      />
+
+      <div class="absolute inset-0 bg-black/40"></div>
+
+      <div class="absolute inset-0 flex flex-col justify-end p-6 lg:p-8">
+        <div class="text-white">
+          <h3 class="mb-4 text-3xl leading-tight font-medium uppercase lg:text-4xl">
+            Гора Бозжыра
+          </h3>
+          <p class="text-lg leading-relaxed opacity-90 lg:text-xl">
+            Это визитная карточка Мангистау — причудливые меловые пики, возвышающиеся посреди
+            бескрайней степи.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative h-[500px] overflow-hidden lg:h-[600px]">
+      <Image
+        src={tuzbairImage}
+        alt="Гора Тузбаир"
+        class="absolute inset-0 h-full w-full"
+        quality={100}
+      />
+
+      <div class="absolute inset-0 bg-black/40"></div>
+
+      <div class="absolute inset-0 flex flex-col justify-end p-6 lg:p-8">
+        <div class="text-white">
+          <h3 class="mb-4 text-3xl leading-tight font-medium uppercase lg:text-4xl">
+            Гора Тузбаир
+          </h3>
+          <p class="text-lg leading-relaxed opacity-90 lg:text-xl">
+            Одна из самых фотогеничных точек Мангистау, гора Тузбаир расположена на краю солёного
+            плато, где белоснежные обрывы создают фантастические пейзажи.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile layout (less than md) -->
+  <div class="px-4 pb-8 md:hidden">
+    <div class="grid grid-cols-2 gap-4">
+      <div class="relative h-[240px] overflow-hidden rounded-2xl">
+        <Image
+          src={bozzhyraImage}
+          alt="Гора Бозжыра"
+          class="absolute inset-0 h-full w-full object-cover"
+          quality={100}
+        />
+        <div class="absolute inset-0 bg-black/30"></div>
+        <div class="absolute inset-0 flex flex-col justify-end p-4">
+          <div class="text-white">
+            <h3 class="text-lg leading-tight font-medium uppercase">Гора Бозжыра</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative h-[240px] overflow-hidden rounded-2xl">
+        <Image
+          src={tuzbairImage}
+          alt="Гора Тузбаир"
+          class="absolute inset-0 h-full w-full object-cover"
+          quality={100}
+        />
+        <div class="absolute inset-0 bg-black/30"></div>
+        <div class="absolute inset-0 flex flex-col justify-end p-4">
+          <div class="text-white">
+            <h3 class="text-lg leading-tight font-medium uppercase">Гора Тузбаир</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

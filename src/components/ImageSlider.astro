@@ -1,0 +1,130 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  images: { src: any; alt: string; title?: string; subtitle?: string }[];
+  sliderId: string;
+}
+
+const { images, sliderId } = Astro.props;
+---
+
+<div class="image-slider-container">
+  <!-- Mobile slider (visible only on screens smaller than sm) -->
+  <div class="block md:hidden">
+    <div class="embla" data-embla data-slider-id={sliderId}>
+      <div class="embla__container">
+        {
+          images.map((image, index) => (
+            <div class="embla__slide">
+              <div class="relative">
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  class="aspect-square w-full rounded-[20px] object-cover"
+                  loading="lazy"
+                />
+                {(image.title || image.subtitle) && (
+                  <div class="absolute right-0 bottom-0 left-0 rounded-b-[20px] bg-gradient-to-t from-black/70 to-transparent p-4 text-center">
+                    {image.title && (
+                      <h3 class="mb-1 text-lg font-bold text-white">{image.title}</h3>
+                    )}
+                    {image.subtitle && <p class="text-sm text-white/90">{image.subtitle}</p>}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop layout (visible only on sm and larger screens) -->
+  <div class="hidden w-full flex-row items-center gap-3 md:flex">
+    {
+      images.map((image) => (
+        <Image
+          src={image.src}
+          alt={image.alt}
+          class="aspect-square size-full max-w-[120px] rounded-[20px] object-cover lg:max-w-[160px] xl:max-w-[180px] 2xl:max-w-[200px]"
+          loading="lazy"
+        />
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  import EmblaCarousel from 'embla-carousel';
+
+  // Initialize all carousels when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    const emblaNodes = document.querySelectorAll('.embla[data-slider-id]');
+
+    emblaNodes.forEach((emblaNode) => {
+      const htmlElement = emblaNode as HTMLElement;
+      const embla = EmblaCarousel(htmlElement, {
+        loop: true,
+        align: 'start',
+        slidesToScroll: 1,
+        containScroll: 'trimSnaps',
+      });
+
+      // Auto-scroll every 4 seconds
+      let autoScrollInterval: ReturnType<typeof setInterval> | undefined;
+
+      const startAutoScroll = () => {
+        autoScrollInterval = setInterval(() => {
+          embla.scrollNext();
+        }, 4000);
+      };
+
+      const stopAutoScroll = () => {
+        if (autoScrollInterval) {
+          clearInterval(autoScrollInterval);
+        }
+      };
+
+      // Start auto-scroll
+      startAutoScroll();
+
+      // Pause auto-scroll on user interaction
+      htmlElement.addEventListener('mouseenter', stopAutoScroll);
+      htmlElement.addEventListener('mouseleave', startAutoScroll);
+      htmlElement.addEventListener('touchstart', stopAutoScroll);
+      htmlElement.addEventListener('touchend', () => {
+        // Restart auto-scroll after a delay when touch ends
+        setTimeout(startAutoScroll, 3000);
+      });
+
+      // Clean up interval when page unloads
+      window.addEventListener('beforeunload', stopAutoScroll);
+    });
+  });
+</script>
+
+<style>
+  .embla {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .embla__container {
+    display: flex;
+    gap: 12px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .embla__slide {
+    flex: 0 0 80%;
+    min-width: 0;
+  }
+
+  @media (max-width: 480px) {
+    .embla__slide {
+      flex: 0 0 90%;
+    }
+  }
+</style>

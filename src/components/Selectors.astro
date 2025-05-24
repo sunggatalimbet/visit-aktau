@@ -6,11 +6,11 @@ interface Props {
 const { selectors } = Astro.props;
 ---
 
-<div class="selector-container flex flex-row items-center gap-4">
+<div class="selector-container flex flex-row items-center gap-2 sm:gap-4">
   {
     selectors.map((s, index) => {
       const baseClasses =
-        'cursor-pointer uppercase border-2 border-white rounded-full px-8 py-3 text-lg font-medium transition-colors duration-300';
+        'cursor-pointer uppercase border-2 border-white rounded-full px-4 md:px-8 py-2 md:py-3 text-sm sm:text-lg font-medium transition-colors duration-300';
       const defaultClasses = s.active ? 'bg-white text-[#3D3F46]' : 'text-white';
 
       return (

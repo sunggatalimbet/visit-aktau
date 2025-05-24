@@ -2,15 +2,16 @@
 interface Props {
   text: string;
   link: string;
+  styles?: string;
 }
 
-const { text, link } = Astro.props;
+const { text, link, styles = '' } = Astro.props;
 ---
 
-<button class="inline-flex">
+<button class={styles}>
   <a
     href={link}
-    class="rounded-full border-2 border-white px-8 py-3 text-lg font-medium text-white uppercase transition-colors duration-300 hover:bg-white hover:text-gray-800"
+    class="rounded-full border-1 border-white px-6 py-1 text-lg font-medium text-white uppercase transition-colors duration-300 hover:bg-white hover:text-gray-800 sm:border-2 sm:px-8 sm:py-3"
   >
     {text}
   </a>

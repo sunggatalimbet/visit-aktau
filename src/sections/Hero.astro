@@ -7,26 +7,32 @@ import Subtitle from '../components/Subtitle.astro';
 import Button from '../components/Button.astro';
 ---
 
-<section class="relative w-full">
+<section class="relative h-screen w-full overflow-hidden sm:h-auto">
   <Image
     src={heroBackground}
     alt="Mangistau landscape image"
-    class="absolute inset-0 h-full max-h-[1083px] w-full object-cover object-[80%_20%]"
+    class="absolute inset-0 h-full max-h-[1083px] w-full scale-150 object-cover object-top pt-20 sm:scale-100 sm:object-[80%_20%] sm:pt-0"
     quality={100}
   />
 
-  <div class="relative z-10 flex max-w-7xl flex-col justify-center gap-6 px-6 py-32 lg:px-10">
-    <div class="w-full sm:w-4/5">
-      <Title
-        text={'Путешествия по Мангистау — там, где Каспий раскрывает свои тайны'}
-        type="hero"
+  <div
+    class="relative z-10 flex min-h-screen max-w-7xl flex-col justify-between gap-6 px-6 py-16 sm:h-auto sm:justify-center sm:py-32 lg:px-10"
+  >
+    <div class="flex flex-1 flex-col justify-center gap-4">
+      <div class="w-full sm:w-4/5">
+        <Title
+          text={'Путешествия по Мангистау — там, где Каспий раскрывает свои тайны'}
+          type="hero"
+        />
+      </div>
+
+      <Subtitle
+        styles="sm:max-w-[54%]"
+        text={'Добро пожаловать в место, где каждый закат неповторим, а приключения начинаются за горизонтом!'}
       />
+      <Button text={'Что посетить?'} link="#destinations" styles="hidden sm:inline-flex" />
     </div>
 
-    <Subtitle
-      text={'Добро пожаловать в место, где каждый закат неповторим, а приключения начинаются за горизонтом!'}
-    />
-
-    <Button text={'Что посетить?'} link="#destinations" />
+    <Button text={'Что посетить?'} link="#destinations" styles="sm:hidden" />
   </div>
 </section>

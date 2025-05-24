@@ -5,6 +5,9 @@ import Hero from '../sections/Hero.astro';
 import Guider from '../sections/Guider.astro';
 import Places from '../sections/Places.astro';
 import CTA from '../sections/CTA.astro';
+import HomeMangistau from '../sections/HomeMangistau.astro';
+import IntroduceAktau from '../sections/IntroduceAktau.astro';
+import Footer from '../sections/Footer.astro';
 
 interface Props {
   title: string;
@@ -38,13 +41,14 @@ const { title, description = 'Туристический сайт города �
   </head>
   <body class="min-h-screen w-full">
     <Header />
-    <main class="mx-auto max-w-[1920px]">
+    <main class="mx-auto w-full max-w-[1920px]">
       <Hero />
       <Guider />
       <Places />
       <CTA />
+      <HomeMangistau />
+      <IntroduceAktau />
     </main>
-
-    <!-- You can add a footer component here -->
+    <Footer />
   </body>
 </html>

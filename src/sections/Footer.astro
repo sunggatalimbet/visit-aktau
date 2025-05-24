@@ -1,0 +1,114 @@
+---
+import { Image } from 'astro:assets';
+import instagramWhite from '../images/instagram-white.svg';
+import facebookWhite from '../images/facebook-white.svg';
+import Title from '../components/Title.astro';
+import aktauLogo from '../images/aktau-logo.svg';
+import amsOutsourceLogo from '../images/ams-outsource-logo.svg';
+
+// Navigation links array (same as in header)
+const navLinks = [
+  { href: '#guide', text: 'Путеводитель' },
+  { href: '#aktau', text: 'Актау' },
+  { href: '#mangistau', text: 'Мангистау' },
+  { href: '#gastronomy', text: 'Гастрономия' },
+];
+
+// Social media links array with labels
+const socialLinks = [
+  {
+    href: 'https://www.instagram.com/tourism_mangystau?igsh=ZGY1NzcxdXJycjZ3',
+    icon: instagramWhite,
+    alt: 'Instagram',
+    label: 'tourism_mangystau',
+  },
+  {
+    href: 'https://www.facebook.com/people/Mangystau-Tourism-Basqarmasy/100079939274650/?ref=ig_profile_ac',
+    icon: facebookWhite,
+    alt: 'Facebook',
+    label: 'mangystau tourism basqarmasy',
+  },
+];
+---
+
+<footer class="bg-[#3D3F46] py-16">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <!-- Desktop layout (hidden on mobile) -->
+    <div class="hidden flex-col items-start justify-between md:flex lg:flex-row lg:items-center">
+      <div class="mb-12 lg:mb-0 lg:max-w-xl">
+        <Title text={'МАНГИСТАУ — КРАЙ УДИВИТЕЛЬНЫХ ОТКРЫТИЙ'} type="hero" />
+      </div>
+
+      <div class="flex flex-col space-y-4">
+        {
+          socialLinks.map((social) => (
+            <a
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center space-x-3 text-white transition-colors hover:text-gray-300"
+            >
+              <Image src={social.icon} alt={social.alt} class="h-6 w-6" />
+              <span class="text-lg">{social.label}</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Desktop bottom section: Logo and navigation -->
+    <div class="mt-16 hidden border-t border-white pt-8 md:block">
+      <div class="flex flex-col items-center justify-between lg:flex-row lg:items-center">
+        <div class="flex flex-row items-center gap-4">
+          <Image src={aktauLogo} alt="logo" class="h-16 w-16" />
+          <Image src={amsOutsourceLogo} alt="logo" class="h-24 w-24" />
+        </div>
+        <div class="flex flex-1 justify-center">
+          <nav class="flex flex-wrap gap-6 lg:gap-12">
+            {
+              navLinks.map((link) => (
+                <a
+                  href={link.href}
+                  class="text-lg font-medium text-white transition-colors hover:text-gray-300"
+                >
+                  {link.text}
+                </a>
+              ))
+            }
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile layout -->
+    <div class="md:hidden">
+      <div class="mb-8">
+        <Title text={'МАНГИСТАУ — КРАЙ УДИВИТЕЛЬНЫХ ОТКРЫТИЙ'} type="hero" />
+      </div>
+
+      <div class="mb-8 border-t border-white"></div>
+
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <Image src={aktauLogo} alt="logo" class="h-12 w-12" />
+          <Image src={amsOutsourceLogo} alt="logo" class="h-16 w-16" />
+        </div>
+
+        <div class="flex items-center gap-4">
+          {
+            socialLinks.map((social) => (
+              <a
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-white transition-colors hover:text-gray-300"
+              >
+                <Image src={social.icon} alt={social.alt} class="h-8 w-8" />
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

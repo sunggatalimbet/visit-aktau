@@ -2,12 +2,35 @@
 import Title from '../components/Title.astro';
 import Selectors from '../components/Selectors.astro';
 import Description from '../components/Description.astro';
+import ImageSlider from '../components/ImageSlider.astro';
 import { Image } from 'astro:assets';
 
 import routemapBackgroundImage from '../images/routemap-background.jpg';
 import routemapImage from '../images/routemap.png';
 import tuzbairImage from '../images/tuzbair-image.jpg';
 import { routemapSelectors } from '../shared/constants';
+
+// Prepare images array for the slider
+const sliderImages = [
+  {
+    src: tuzbairImage,
+    alt: 'Mangistau landscape',
+    title: 'Тузбаир',
+    subtitle: 'инопланетный пейзаж Казахстана',
+  },
+  {
+    src: tuzbairImage,
+    alt: 'Mangistau landscape',
+    title: 'Тузбаир',
+    subtitle: 'инопланетный пейзаж Казахстана',
+  },
+  {
+    src: tuzbairImage,
+    alt: 'Mangistau landscape',
+    title: 'Тузбаир',
+    subtitle: 'инопланетный пейзаж Казахстана',
+  },
+];
 ---
 
 <section class="relative h-full max-h-[1080px] w-full overflow-hidden py-10">
@@ -26,7 +49,7 @@ import { routemapSelectors } from '../shared/constants';
     class="absolute top-0 -right-20 bottom-0 z-20 hidden h-full object-contain object-top-right lg:block xl:right-0"
   />
 
-  <div class="relative z-30 flex h-full flex-col justify-between gap-20 px-10 py-6">
+  <div class="relative z-30 flex h-full flex-col justify-between gap-20 px-4 py-6 md:px-10">
     <div class="flex flex-col gap-6">
       <div class="max-w-md lg:max-w-xl xl:max-w-2xl">
         <Title text={'Путеводитель по лучшим локациям'} type="default" />
@@ -36,28 +59,11 @@ import { routemapSelectors } from '../shared/constants';
       </div>
       <div class="max-w-xl">
         <Description
-          styles="uppercase"
           text={'Исследуйте достопримечательности, маршруты и природные чудеса региона на интерактивной карте — планируйте своё путешествие по Мангистау с лёгкостью и вдохновением'}
         />
       </div>
     </div>
 
-    <div class="flex flex-row items-center gap-3">
-      <Image
-        src={tuzbairImage}
-        alt="Mangistau landscape"
-        class="aspect-square size-full rounded-[20px] lg:max-w-[180px] xl:max-w-[210px] 2xl:max-w-[240px]"
-      />
-      <Image
-        src={tuzbairImage}
-        alt="Mangistau landscape"
-        class="aspect-square size-full rounded-[20px] lg:max-w-[180px] xl:max-w-[210px] 2xl:max-w-[240px]"
-      />
-      <Image
-        src={tuzbairImage}
-        alt="Mangistau landscape"
-        class="aspect-square size-full rounded-[20px] lg:max-w-[180px] xl:max-w-[210px] 2xl:max-w-[240px]"
-      />
-    </div>
+    <ImageSlider images={sliderImages} sliderId="guider-slider" />
   </div>
 </section>

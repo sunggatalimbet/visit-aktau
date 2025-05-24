@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets';
+import Title from '../components/Title.astro';
+import Button from '../components/Button.astro';
+import introduceAktauImage from '../images/introduce-aktau.jpg';
+
+interface Props {
+  title?: string;
+}
+
+const { title = 'Давайте познакомимся с Актау' } = Astro.props;
+---
+
+<section class="relative w-full">
+  <Image
+    src={introduceAktauImage}
+    alt="Introduce Aktau"
+    class="h-[368px] w-full object-cover lg:h-[520px]"
+    quality={100}
+  />
+
+  <!-- Dark overlay for better text readability -->
+  <div class="absolute inset-0 bg-black/20"></div>
+
+  <!-- Title overlay -->
+  <div class="absolute inset-0 mx-auto flex flex-col items-center justify-center gap-6 px-4">
+    <Title text={title} type="default" className="text-center" />
+    <Button text={'Что посетить?'} link="#destinations" />
+  </div>
+</section>

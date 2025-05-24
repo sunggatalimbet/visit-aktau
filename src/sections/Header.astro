@@ -4,6 +4,7 @@ import instagramWhite from '../images/instagram-white.svg';
 import instagramBlack from '../images/instagram-black.svg';
 import facebookWhite from '../images/facebook-white.svg';
 import facebookBlack from '../images/facebook-black.svg';
+import mangystauTravelLogo from '../images/mangystau-travel.png';
 
 // Navigation links array
 const navLinks = [
@@ -38,13 +39,13 @@ const socialLinks = [
 >
   <div
     id="main-header"
-    class="mx-3 my-3 h-16 max-w-5xl rounded-full border-2 border-white lg:mx-auto"
+    class="mx-3 my-3 h-12 max-w-5xl rounded-full sm:h-16 md:border-2 md:border-white lg:mx-auto"
   >
-    <nav class="flex items-center justify-between px-8 py-3">
+    <nav class="flex items-center justify-between px-2 sm:px-8 sm:py-[5px]">
       <!-- Logo -->
       <div class="flex-shrink-0">
         <a href="/" class="block">
-          <img src="/placeholder.jpg" alt="Visit Aktau" class="h-10" />
+          <Image src={mangystauTravelLogo} alt="logo" class="scale-[0.8]" />
         </a>
       </div>
 
@@ -82,7 +83,7 @@ const socialLinks = [
       <button id="mobile-menu-button" class="text-white focus:outline-none md:hidden">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
+          class="h-8 w-8"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -101,10 +102,10 @@ const socialLinks = [
 <!-- Mobile Menu -->
 <div
   id="mobile-menu"
-  class="fixed top-0 right-0 z-50 h-full w-64 translate-x-full transform bg-white transition-transform duration-300 ease-in-out"
+  class="fixed top-0 right-0 z-50 h-full w-full translate-x-full transform bg-[545050]/30 backdrop-blur-md transition-transform duration-300 ease-in-out"
 >
-  <div class="p-5">
-    <button id="close-menu-button" class="absolute top-4 right-4 text-black focus:outline-none">
+  <div class="relative h-full">
+    <button id="close-menu-button" class="absolute top-4 right-4 text-white focus:outline-none">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-6 w-6"
@@ -120,24 +121,33 @@ const socialLinks = [
       </svg>
     </button>
 
-    <div class="mt-10 flex flex-col space-y-6">
-      {
-        navLinks.map((link) => (
-          <a href={link.href} class="text-black transition-colors hover:text-black/80">
-            {link.text}
-          </a>
-        ))
-      }
+    <!-- Centered content container -->
+    <div class="flex h-full flex-col items-center justify-center space-y-8">
+      <!-- Navigation links -->
+      <nav class="flex flex-col items-center space-y-6">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class="text-xl font-medium text-white transition-colors hover:text-gray-300"
+            >
+              {link.text}
+            </a>
+          ))
+        }
+      </nav>
 
-      <div class="border-t border-gray-600 pt-6">
+      <!-- Social media icons -->
+      <div class="flex items-center gap-6">
         {
           socialLinks.map((social) => (
             <a
               href={social.href}
-              class="mb-4 flex items-center text-black transition-colors hover:text-black/80"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-white transition-colors hover:text-gray-300"
             >
-              <Image src={social.mobIcon} alt={social.alt} class="mr-3 h-6 w-6" />
-              {social.label}
+              <Image src={social.icon} alt={social.alt} class="h-8 w-8" />
             </a>
           ))
         }
