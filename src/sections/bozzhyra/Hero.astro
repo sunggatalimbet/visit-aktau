@@ -7,11 +7,18 @@ import Subtitle from '../../components/Subtitle.astro';
 import Button from '../../components/Button.astro';
 ---
 
-<section class="relative h-screen w-full overflow-hidden sm:h-auto">
+<section
+  class="relative h-screen w-full overflow-hidden py-10 sm:h-auto sm:py-32"
+  id="bozzhyra-hero-section"
+>
+  <!-- Background overlay for fade effect -->
+  <div id="bozzhyra-hero-overlay" class="absolute inset-0 z-20 bg-black opacity-100"></div>
+
   <Image
+    id="bozzhyra-hero-image"
     src={bozzhyraHeroBackground}
     alt="Mangistau landscape image"
-    class="absolute inset-0 h-full max-h-[1083px] w-full scale-150 object-cover object-top pt-20 sm:scale-100 sm:object-[80%_20%] sm:pt-0"
+    class="absolute inset-0 h-full max-h-[1083px] w-full scale-150 object-cover object-top sm:scale-100 sm:object-[80%_20%]"
     quality={100}
   />
 
@@ -19,17 +26,123 @@ import Button from '../../components/Button.astro';
     class="relative z-10 flex h-screen max-w-7xl flex-col justify-between gap-6 px-6 py-16 sm:h-auto sm:justify-center sm:py-32 lg:px-10"
   >
     <div class="flex flex-1 flex-col justify-center gap-4">
-      <div class="w-full sm:w-4/5">
-        <Title text={'Бозжыра - Марсианский пейзаж Мангистау'} type="hero" />
+      <div class="w-full sm:w-4/5" id="bozzhyra-hero-title-container">
+        <Title
+          text={'Бозжыра - Марсианский пейзаж Мангистау'}
+          type="hero"
+          className="translate-y-8 transform opacity-0"
+        />
       </div>
 
-      <Subtitle
-        styles="sm:max-w-[54%]"
-        text={'Добро пожаловать в место, где каждый закат неповторим, а приключения начинаются за горизонтом!'}
-      />
-      <Button text={'Что посетить?'} link="#destinations" styles="hidden sm:inline-flex" />
+      <div id="bozzhyra-hero-subtitle">
+        <Subtitle
+          styles="sm:max-w-[54%] translate-y-8 transform opacity-0"
+          text={'Добро пожаловать в место, где каждый закат неповторим, а приключения начинаются за горизонтом!'}
+        />
+      </div>
+
+      <div id="bozzhyra-hero-button-desktop" class="translate-y-4 transform opacity-0">
+        <Button text={'Что посетить?'} link="#destinations" styles="hidden sm:inline-flex" />
+      </div>
     </div>
 
-    <Button text={'Что посетить?'} link="#destinations" styles="sm:hidden" />
+    <div id="bozzhyra-hero-button-mobile" class="translate-y-4 transform opacity-0">
+      <Button text={'Что посетить?'} link="#destinations" styles="sm:hidden" />
+    </div>
   </div>
 </section>
+
+<script>
+  import { gsap } from 'gsap';
+
+  // Wait for DOM to be fully loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    // Create main timeline
+    const tl = gsap.timeline();
+
+    // Set initial states
+    gsap.set('#bozzhyra-hero-image', {
+      scale: 1.2,
+      transformOrigin: 'center center',
+      filter: 'brightness(0.7)',
+    });
+
+    // Timeline sequence
+    tl
+      // 1. Fade out overlay while revealing and animating background image
+      .to('#bozzhyra-hero-overlay', {
+        opacity: 0,
+        duration: 1.5,
+        ease: 'power2.inOut',
+      })
+      .to(
+        '#bozzhyra-hero-image',
+        {
+          scale: 1.05,
+          filter: 'brightness(1)',
+          duration: 2,
+          ease: 'power2.out',
+        },
+        '-=1.2'
+      )
+
+      // 2. Animate title with reveal effect
+      .to(
+        '#bozzhyra-hero-title-container h1',
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          ease: 'power2.out',
+        },
+        '-=0.8'
+      )
+
+      // 3. Animate subtitle with fade in and slide up
+      .to(
+        '#bozzhyra-hero-subtitle h2',
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: 'power2.out',
+        },
+        '-=0.4'
+      )
+
+      // 4. Animate buttons
+      .to(
+        '#bozzhyra-hero-button-desktop, #bozzhyra-hero-button-mobile',
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+        },
+        '-=0.6'
+      )
+
+      // 5. Subtle continuous background animation
+      .to(
+        '#bozzhyra-hero-image',
+        {
+          scale: 1,
+          duration: 8,
+          ease: 'none',
+          repeat: -1,
+          yoyo: true,
+        },
+        '-=0.5'
+      );
+  });
+</script>
+
+<style>
+  #bozzhyra-hero-section {
+    will-change: transform;
+  }
+
+  #bozzhyra-hero-image {
+    will-change: transform, filter;
+  }
+</style>

@@ -31,35 +31,249 @@ const placesImages = [
 ];
 ---
 
-<div class="flex h-auto w-full flex-col bg-[#3D3F46] lg:h-[1080px] lg:flex-row">
+<div class="flex h-auto w-full flex-col bg-[#3D3F46] lg:h-[1080px] lg:flex-row" id="places-section">
   <div
     class="relative hidden h-full w-full items-end justify-end md:flex md:h-[720px] lg:h-auto lg:w-1/2"
+    id="places-hero-image"
   >
     <Image
       src={higlightsImage1}
       alt="Актау — Очарование Прикаспийского побережья"
       class="absolute hidden h-full w-full object-cover md:block"
     />
-    <div class="z-20 pb-6 pl-6 lg:pb-12 lg:pl-10">
+    <div class="z-20 pb-6 pl-6 lg:pb-12 lg:pl-10" id="places-hero-title">
       <Title text={'Актау — очарование прикаспийского побережья'} type="hero" />
     </div>
   </div>
+
+  <script>
+    import { gsap } from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+    // Register ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set initial states for all animated elements
+      gsap.set('#places-hero-title h1', {
+        opacity: 0,
+        y: 30,
+      });
+
+      gsap.set('#places-main-title h1', {
+        opacity: 0,
+        y: 20,
+      });
+
+      gsap.set('#places-selectors button', {
+        opacity: 0,
+        y: 20,
+      });
+
+      gsap.set('#places-description', {
+        opacity: 0,
+        y: 20,
+      });
+
+      gsap.set('#places-slider', {
+        opacity: 0,
+        y: 30,
+      });
+
+      gsap.set('.places-decorative-line line', {
+        strokeDashoffset: 200,
+      });
+
+      // Create main timeline with ScrollTrigger
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#places-section',
+          start: 'top 70%',
+          end: 'bottom 30%',
+          toggleActions: 'play none none reverse',
+        },
+      });
+
+      // Animation sequence
+      tl
+        // 1. Animate hero title first
+        .to('#places-hero-title h1', {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+        })
+
+        // 2. Animate main title
+        .to(
+          '#places-main-title h1',
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+          },
+          '-=0.4'
+        )
+
+        // 3. Draw first decorative line
+        .to(
+          '.places-decorative-line:first-of-type line',
+          {
+            strokeDashoffset: 0,
+            duration: 0.8,
+            ease: 'power2.inOut',
+          },
+          '-=0.3'
+        )
+
+        // 4. Animate selector buttons with simple fade and slide
+        .to(
+          '#places-selectors button',
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+            stagger: {
+              amount: 0.2,
+              from: 'start',
+            },
+          },
+          '-=0.4'
+        )
+
+        // 5. Draw second decorative line
+        .to(
+          '.places-decorative-line:last-of-type line',
+          {
+            strokeDashoffset: 0,
+            duration: 0.8,
+            ease: 'power2.inOut',
+          },
+          '-=0.3'
+        )
+
+        // 6. Fade in description text
+        .to(
+          '#places-description',
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+          },
+          '-=0.4'
+        )
+
+        // 7. Finally animate the image slider
+        .to(
+          '#places-slider',
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power2.out',
+          },
+          '-=0.3'
+        );
+
+      // Add interactive hover effects for selector buttons
+      const selectorButtons = document.querySelectorAll('#places-selectors button');
+      selectorButtons.forEach((button) => {
+        const buttonElement = button as HTMLElement;
+
+        buttonElement.addEventListener('mouseenter', () => {
+          gsap.to(buttonElement, {
+            scale: 1.05,
+            duration: 0.2,
+            ease: 'power2.out',
+          });
+        });
+
+        buttonElement.addEventListener('mouseleave', () => {
+          gsap.to(buttonElement, {
+            scale: 1,
+            duration: 0.2,
+            ease: 'power2.out',
+          });
+        });
+      });
+    });
+  </script>
+
+  <style>
+    .places-line-container {
+      width: 100%;
+      margin: 0.5rem 0;
+    }
+
+    .places-decorative-line {
+      width: 100%;
+      height: 2px;
+    }
+
+    #places-section {
+      will-change: transform;
+    }
+
+    #places-selectors button {
+      will-change: transform, opacity;
+    }
+  </style>
 
   <div
     class="flex h-full flex-col justify-between gap-20 px-4 py-12 text-white md:px-8 md:py-12 lg:w-1/2"
   >
     <div class="flex flex-col gap-6">
-      <Title text={'Город, не похожий ни на один другой'} type="default" />
-      <div class="max-w-lg">
+      <div id="places-main-title">
+        <Title text={'Город, не похожий ни на один другой'} type="default" />
+      </div>
+
+      <!-- Animated decorative line -->
+      <div class="places-line-container">
+        <svg width="100%" height="2" class="places-decorative-line">
+          <line
+            x1="0"
+            y1="1"
+            x2="100%"
+            y2="1"
+            stroke="white"
+            stroke-width="2"
+            stroke-dasharray="200"
+            stroke-dashoffset="200"></line>
+        </svg>
+      </div>
+
+      <div class="max-w-lg" id="places-selectors">
         <Selectors selectors={routemapSelectors} />
       </div>
-      <div class="max-w-xl">
+
+      <!-- Another animated line -->
+      <div class="places-line-container">
+        <svg width="100%" height="2" class="places-decorative-line">
+          <line
+            x1="0"
+            y1="1"
+            x2="100%"
+            y2="1"
+            stroke="white"
+            stroke-width="2"
+            stroke-dasharray="200"
+            stroke-dashoffset="200"></line>
+        </svg>
+      </div>
+
+      <div class="max-w-xl" id="places-description">
         <Description
           text={'Актау - это единственный город с улицами без названий. Вместо них, используются микрорайоны и номера домов'}
         />
       </div>
     </div>
 
-    <ImageSlider images={placesImages} sliderId="places-slider" />
+    <div id="places-slider">
+      <ImageSlider images={placesImages} sliderId="places-slider" />
+    </div>
   </div>
 </div>

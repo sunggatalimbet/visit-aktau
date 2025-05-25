@@ -11,7 +11,7 @@ interface Props {
 const { title = 'Давайте познакомимся с Актау' } = Astro.props;
 ---
 
-<section class="relative w-full">
+<section class="relative w-full" id="introduce-aktau-section">
   <Image
     src={introduceAktauImage}
     alt="Introduce Aktau"
@@ -24,7 +24,71 @@ const { title = 'Давайте познакомимся с Актау' } = Astr
 
   <!-- Title overlay -->
   <div class="absolute inset-0 mx-auto flex flex-col items-center justify-center gap-6 px-4">
-    <Title text={title} type="default" className="text-center" />
-    <Button text={'Что посетить?'} link="#destinations" />
+    <div id="introduce-aktau-title">
+      <Title text={title} type="default" className="text-center" />
+    </div>
+    <div id="introduce-aktau-button">
+      <Button text={'Что посетить?'} link="#destinations" />
+    </div>
   </div>
 </section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  // Register ScrollTrigger plugin
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Wait for DOM to be fully loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    // Set initial states - very simple
+    gsap.set('#introduce-aktau-title h1', {
+      opacity: 0,
+      y: 20,
+    });
+
+    gsap.set('#introduce-aktau-button', {
+      opacity: 0,
+      y: 15,
+    });
+
+    // Create simple timeline with ScrollTrigger
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#introduce-aktau-section',
+        start: 'top 80%',
+        end: 'bottom 20%',
+        toggleActions: 'play none none reverse',
+      },
+    });
+
+    // Simple animation sequence
+    tl.to('#introduce-aktau-title h1', {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: 'power2.out',
+    }).to(
+      '#introduce-aktau-button',
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: 'power2.out',
+      },
+      '-=0.2'
+    );
+  });
+</script>
+
+<style>
+  #introduce-aktau-section {
+    will-change: transform;
+  }
+
+  #introduce-aktau-title,
+  #introduce-aktau-button {
+    will-change: transform, opacity;
+  }
+</style>

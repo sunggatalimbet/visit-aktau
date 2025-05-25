@@ -4,9 +4,10 @@ import { Image } from 'astro:assets';
 interface Props {
   images: { src: any; alt: string; title?: string; subtitle?: string }[];
   sliderId: string;
+  animationClass?: string;
 }
 
-const { images, sliderId } = Astro.props;
+const { images, sliderId, animationClass = '' } = Astro.props;
 ---
 
 <div class="image-slider-container">
@@ -17,7 +18,7 @@ const { images, sliderId } = Astro.props;
         {
           images.map((image, index) => (
             <div class="embla__slide">
-              <div class="relative">
+              <div class="relative w-full">
                 <Image
                   src={image.src}
                   alt={image.alt}
@@ -43,13 +44,15 @@ const { images, sliderId } = Astro.props;
   <!-- Desktop layout (visible only on sm and larger screens) -->
   <div class="hidden w-full flex-row items-center gap-3 md:flex">
     {
-      images.map((image) => (
-        <Image
-          src={image.src}
-          alt={image.alt}
-          class="aspect-square size-full max-w-[120px] rounded-[20px] object-cover lg:max-w-[160px] xl:max-w-[180px] 2xl:max-w-[200px]"
-          loading="lazy"
-        />
+      images.map((image, index) => (
+        <div class={`guider-card ${animationClass}`} data-card-index={index}>
+          <Image
+            src={image.src}
+            alt={image.alt}
+            class="aspect-square size-full max-w-[180px] rounded-[20px] object-cover lg:max-w-[200px] xl:max-w-[220px]"
+            loading="lazy"
+          />
+        </div>
       ))
     }
   </div>
@@ -118,7 +121,7 @@ const { images, sliderId } = Astro.props;
   }
 
   .embla__slide {
-    flex: 0 0 80%;
+    flex: 0 0 100%;
     min-width: 0;
   }
 

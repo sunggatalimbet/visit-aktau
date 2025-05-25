@@ -6,7 +6,7 @@ interface Props {
 const { selectors } = Astro.props;
 ---
 
-<div class="selector-container flex flex-row items-center gap-2 sm:gap-4">
+<div class="selector-container flex w-full flex-row items-center gap-2 sm:gap-4 md:justify-between">
   {
     selectors.map((s, index) => {
       const baseClasses =

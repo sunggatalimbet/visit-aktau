@@ -8,32 +8,37 @@ import { Image } from 'astro:assets';
 import routemapBackgroundImage from '../images/routemap-background.jpg';
 import routemapImage from '../images/routemap.png';
 import tuzbairImage from '../images/tuzbair-image.jpg';
+import guider2Image from '../images/guider-image-2.png';
+import guider1Image from '../images/hero-background.jpg';
 import { routemapSelectors } from '../shared/constants';
 
 // Prepare images array for the slider
 const sliderImages = [
   {
-    src: tuzbairImage,
-    alt: 'Mangistau landscape',
+    src: guider1Image,
+    alt: 'ИзображениеБозжыра',
+    title: 'Бозжыра',
+    subtitle: 'инопланетный пейзаж Казахстана',
+  },
+  {
+    src: guider2Image,
+    alt: 'Изображение Тузбаир',
     title: 'Тузбаир',
     subtitle: 'инопланетный пейзаж Казахстана',
   },
   {
     src: tuzbairImage,
-    alt: 'Mangistau landscape',
-    title: 'Тузбаир',
-    subtitle: 'инопланетный пейзаж Казахстана',
-  },
-  {
-    src: tuzbairImage,
-    alt: 'Mangistau landscape',
-    title: 'Тузбаир',
+    alt: 'Изображение Торыш, Шеркала',
+    title: 'Торыш, Шеркала',
     subtitle: 'инопланетный пейзаж Казахстана',
   },
 ];
 ---
 
-<section class="relative h-full max-h-[1080px] w-full overflow-hidden py-10">
+<section
+  class="relative h-full max-h-[1080px] w-full overflow-hidden py-10 md:py-32"
+  id="guider-section"
+>
   <div class="absolute inset-0 scale-[1.20]">
     <Image
       src={routemapBackgroundImage}
@@ -47,23 +52,160 @@ const sliderImages = [
     src={routemapImage}
     alt="Mangistau route map"
     class="absolute top-0 -right-20 bottom-0 z-20 hidden h-full object-contain object-top-right lg:block xl:right-0"
+    id="guider-map"
   />
 
   <div class="relative z-30 flex h-full flex-col justify-between gap-20 px-4 py-6 md:px-10">
     <div class="flex flex-col gap-6">
-      <div class="max-w-md lg:max-w-xl xl:max-w-2xl">
+      <div class="max-w-md lg:max-w-xl xl:max-w-2xl" id="guider-title">
         <Title text={'Путеводитель по лучшим локациям'} type="default" />
       </div>
-      <div class="max-w-lg">
+      <div class="max-w-lg" id="guider-selectors">
         <Selectors selectors={routemapSelectors} />
       </div>
-      <div class="max-w-xl">
+      <div class="max-w-xl" id="guider-description">
         <Description
           text={'Исследуйте достопримечательности, маршруты и природные чудеса региона на интерактивной карте — планируйте своё путешествие по Мангистау с лёгкостью и вдохновением'}
         />
       </div>
     </div>
 
-    <ImageSlider images={sliderImages} sliderId="guider-slider" />
+    <div id="guider-slider-container">
+      <ImageSlider images={sliderImages} sliderId="guider-slider" animationClass="guider-animate" />
+    </div>
   </div>
 </section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  // Register ScrollTrigger plugin
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Wait for DOM to be fully loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    // Set initial states for all animated elements
+    gsap.set('#guider-title h1', {
+      opacity: 0,
+      y: 30,
+    });
+
+    gsap.set('#guider-selectors', {
+      opacity: 0,
+      y: 20,
+    });
+
+    gsap.set('#guider-description', {
+      opacity: 0,
+      y: 20,
+    });
+
+    gsap.set('#guider-map', {
+      opacity: 0,
+      x: 50,
+    });
+
+    // Set initial states for destination cards
+    gsap.set('.guider-animate .guider-card', {
+      opacity: 0,
+      y: 30,
+    });
+
+    // Create main timeline with ScrollTrigger
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#guider-section',
+        start: 'top 80%',
+        end: 'bottom 20%',
+        toggleActions: 'play none none reverse',
+      },
+    });
+
+    // Animate content elements first
+    tl.to('#guider-title h1', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power2.out',
+    })
+      .to(
+        '#guider-selectors',
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+        },
+        '-=0.4'
+      )
+      .to(
+        '#guider-description',
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+        },
+        '-=0.3'
+      )
+      .to(
+        '#guider-map',
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+        },
+        '-=0.5'
+      );
+
+    // Animate destination cards with simple stagger
+    tl.to(
+      '.guider-animate .guider-card',
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power2.out',
+        stagger: {
+          amount: 0.3,
+          from: 'start',
+        },
+      },
+      '-=0.3'
+    );
+
+    // Add subtle hover animations for cards
+    const cards = document.querySelectorAll('.guider-animate .guider-card');
+    cards.forEach((card) => {
+      const cardElement = card as HTMLElement;
+
+      cardElement.addEventListener('mouseenter', () => {
+        gsap.to(cardElement, {
+          scale: 1.05,
+          duration: 0.3,
+          ease: 'power2.out',
+        });
+      });
+
+      cardElement.addEventListener('mouseleave', () => {
+        gsap.to(cardElement, {
+          scale: 1,
+          duration: 0.3,
+          ease: 'power2.out',
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .guider-card {
+    will-change: transform, opacity;
+  }
+
+  #guider-section {
+    will-change: transform;
+  }
+</style>

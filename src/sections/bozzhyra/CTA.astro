@@ -11,20 +11,153 @@ interface Props {
 const { title = 'Бозжыра — прикосновение к вечности' } = Astro.props;
 ---
 
-<section class="relative w-full">
-  <Image
-    src={bozzhyraImage}
-    alt="Bozzhyra image"
-    class="h-[368px] w-full scale-[101%] object-cover lg:h-[520px]"
-    quality={100}
-  />
+<section class="relative w-full" id="bozzhyra-cta-section">
+  <div class="bozzhyra-cta-image-container relative overflow-hidden">
+    <Image
+      src={bozzhyraImage}
+      alt="Bozzhyra image"
+      class="bozzhyra-cta-image h-[368px] w-full scale-[101%] object-cover lg:h-[520px]"
+      quality={100}
+    />
+  </div>
 
   <div class="absolute inset-0 bg-black/20"></div>
 
-  <div class="absolute inset-0 mx-auto flex flex-col items-center justify-center gap-6 px-4">
-    <div class="max-w-md sm:max-w-xl">
+  <div
+    class="absolute inset-0 mx-auto flex flex-col items-center justify-center gap-6 px-4"
+    id="bozzhyra-cta-content"
+  >
+    <div class="max-w-md sm:max-w-xl" id="bozzhyra-cta-title">
       <Title text={title} type="default" className="text-center" />
     </div>
-    <Button text={'Построить маршрут'} link="#destinations" />
+    <div id="bozzhyra-cta-button">
+      <Button text={'Построить маршрут'} link="#destinations" />
+    </div>
   </div>
 </section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  // Register ScrollTrigger plugin
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Wait for DOM to be fully loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    // Set initial states for content elements
+    gsap.set('#bozzhyra-cta-title h1', {
+      opacity: 0,
+      y: 30,
+    });
+
+    gsap.set('#bozzhyra-cta-button', {
+      opacity: 0,
+      y: 20,
+    });
+
+    // Set initial clip-path state for image
+    gsap.set('.bozzhyra-cta-image', {
+      clipPath: 'circle(0% at 50% 50%)', // Circle expand from center
+    });
+
+    // Create main timeline with ScrollTrigger
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#bozzhyra-cta-section',
+        start: 'top 75%',
+        end: 'bottom 25%',
+        toggleActions: 'play none none reverse',
+      },
+    });
+
+    // Animation sequence
+    tl
+      // 1. Animate image with circle expand reveal
+      .to('.bozzhyra-cta-image', {
+        clipPath: 'circle(150% at 50% 50%)',
+        duration: 1.2,
+        ease: 'power2.out',
+      })
+
+      // 2. Animate title
+      .to(
+        '#bozzhyra-cta-title h1',
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+        },
+        '-=0.6'
+      )
+
+      // 3. Animate button
+      .to(
+        '#bozzhyra-cta-button',
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+        },
+        '-=0.3'
+      );
+
+    // Add hover effect for the image
+    const imageContainer = document.querySelector('.bozzhyra-cta-image-container');
+    const image = document.querySelector('.bozzhyra-cta-image');
+
+    if (imageContainer && image) {
+      imageContainer.addEventListener('mouseenter', () => {
+        gsap.to(image, {
+          scale: 1.05,
+          duration: 0.4,
+          ease: 'power2.out',
+        });
+      });
+
+      imageContainer.addEventListener('mouseleave', () => {
+        gsap.to(image, {
+          scale: 1.01,
+          duration: 0.4,
+          ease: 'power2.out',
+        });
+      });
+    }
+
+    // Add button hover animation
+    const button = document.querySelector('#bozzhyra-cta-button');
+    if (button) {
+      button.addEventListener('mouseenter', () => {
+        gsap.to(button, {
+          scale: 1.05,
+          duration: 0.2,
+          ease: 'power2.out',
+        });
+      });
+
+      button.addEventListener('mouseleave', () => {
+        gsap.to(button, {
+          scale: 1,
+          duration: 0.2,
+          ease: 'power2.out',
+        });
+      });
+    }
+  });
+</script>
+
+<style>
+  .bozzhyra-cta-image-container {
+    will-change: transform;
+  }
+
+  .bozzhyra-cta-image {
+    will-change: clip-path, transform;
+  }
+
+  #bozzhyra-cta-section {
+    will-change: transform;
+  }
+</style>

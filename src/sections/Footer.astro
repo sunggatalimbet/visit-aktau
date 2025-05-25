@@ -31,22 +31,23 @@ const socialLinks = [
 ];
 ---
 
-<footer class="bg-[#3D3F46] py-16">
-  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+<footer class="bg-[#3D3F46] py-16" id="footer-section">
+  <div class="mx-auto w-full px-6 lg:px-8">
     <!-- Desktop layout (hidden on mobile) -->
     <div class="hidden flex-col items-start justify-between md:flex lg:flex-row lg:items-center">
-      <div class="mb-12 lg:mb-0 lg:max-w-xl">
+      <div class="mb-12 lg:mb-0 lg:max-w-xl" id="footer-title">
         <Title text={'МАНГИСТАУ — КРАЙ УДИВИТЕЛЬНЫХ ОТКРЫТИЙ'} type="hero" />
       </div>
 
-      <div class="flex flex-col space-y-4">
+      <div class="flex flex-col space-y-4" id="footer-social-desktop">
         {
-          socialLinks.map((social) => (
+          socialLinks.map((social, index) => (
             <a
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="flex items-center space-x-3 text-white transition-colors hover:text-gray-300"
+              class="footer-social-link flex items-center space-x-3 text-white transition-colors hover:text-gray-300"
+              data-social-index={index}
             >
               <Image src={social.icon} alt={social.alt} class="h-6 w-6" />
               <span class="text-lg">{social.label}</span>
@@ -57,19 +58,20 @@ const socialLinks = [
     </div>
 
     <!-- Desktop bottom section: Logo and navigation -->
-    <div class="mt-16 hidden border-t border-white pt-8 md:block">
+    <div class="mt-16 hidden border-t border-white pt-8 md:block" id="footer-bottom-desktop">
       <div class="flex flex-col items-center justify-between lg:flex-row lg:items-center">
-        <div class="flex flex-row items-center gap-4">
-          <Image src={aktauLogo} alt="logo" class="h-16 w-16" />
-          <Image src={amsOutsourceLogo} alt="logo" class="h-24 w-24" />
+        <div class="flex flex-row items-center gap-4" id="footer-logos">
+          <Image src={aktauLogo} alt="logo" class="footer-logo h-16 w-16" />
+          <Image src={amsOutsourceLogo} alt="logo" class="footer-logo h-24 w-24" />
         </div>
-        <div class="flex flex-1 justify-center">
+        <div class="flex flex-1 justify-center" id="footer-nav">
           <nav class="flex flex-wrap gap-6 lg:gap-12">
             {
-              navLinks.map((link) => (
+              navLinks.map((link, index) => (
                 <a
                   href={link.href}
-                  class="text-lg font-medium text-white transition-colors hover:text-gray-300"
+                  class="footer-nav-link text-lg font-medium text-white transition-colors hover:text-gray-300"
+                  data-nav-index={index}
                 >
                   {link.text}
                 </a>
@@ -81,27 +83,28 @@ const socialLinks = [
     </div>
 
     <!-- Mobile layout -->
-    <div class="md:hidden">
-      <div class="mb-8">
+    <div class="md:hidden" id="footer-mobile">
+      <div class="mb-8" id="footer-title-mobile">
         <Title text={'МАНГИСТАУ — КРАЙ УДИВИТЕЛЬНЫХ ОТКРЫТИЙ'} type="hero" />
       </div>
 
-      <div class="mb-8 border-t border-white"></div>
+      <div class="mb-8 border-t border-white" id="footer-divider"></div>
 
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <Image src={aktauLogo} alt="logo" class="h-12 w-12" />
-          <Image src={amsOutsourceLogo} alt="logo" class="h-16 w-16" />
+      <div class="flex items-center justify-between" id="footer-bottom-mobile">
+        <div class="flex items-center gap-3" id="footer-logos-mobile">
+          <Image src={aktauLogo} alt="logo" class="footer-logo-mobile h-12 w-12" />
+          <Image src={amsOutsourceLogo} alt="logo" class="footer-logo-mobile h-16 w-16" />
         </div>
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-4" id="footer-social-mobile">
           {
-            socialLinks.map((social) => (
+            socialLinks.map((social, index) => (
               <a
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-white transition-colors hover:text-gray-300"
+                class="footer-social-mobile text-white transition-colors hover:text-gray-300"
+                data-mobile-social-index={index}
               >
                 <Image src={social.icon} alt={social.alt} class="h-8 w-8" />
               </a>
@@ -112,3 +115,192 @@ const socialLinks = [
     </div>
   </div>
 </footer>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  // Register ScrollTrigger plugin
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Wait for DOM to be fully loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    // Set initial states for footer elements
+    gsap.set('#footer-title h1, #footer-title-mobile h1', {
+      opacity: 0,
+      y: 30,
+    });
+
+    gsap.set('.footer-social-link', {
+      opacity: 0,
+      y: 20,
+    });
+
+    gsap.set('#footer-divider', {
+      opacity: 0,
+      scaleX: 0,
+      transformOrigin: 'left center',
+    });
+
+    gsap.set('.footer-logo, .footer-logo-mobile', {
+      opacity: 0,
+      y: 25,
+    });
+
+    gsap.set('.footer-nav-link', {
+      opacity: 0,
+      y: 20,
+    });
+
+    gsap.set('.footer-social-mobile', {
+      opacity: 0,
+      scale: 0.8,
+    });
+
+    // Create main timeline with ScrollTrigger
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#footer-section',
+        start: 'top 85%',
+        end: 'bottom bottom',
+        toggleActions: 'play none none reverse',
+      },
+    });
+
+    // Animation sequence
+    tl
+      // 1. Animate main title
+      .to('#footer-title h1, #footer-title-mobile h1', {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+      })
+
+      // 2. Animate desktop social links with stagger
+      .to(
+        '.footer-social-link',
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+          stagger: 0.15,
+        },
+        '-=0.4'
+      )
+
+      // 3. Animate divider line (mobile)
+      .to(
+        '#footer-divider',
+        {
+          opacity: 1,
+          scaleX: 1,
+          duration: 0.8,
+          ease: 'power2.out',
+        },
+        '-=0.3'
+      )
+
+      // 4. Animate logos with stagger
+      .to(
+        '.footer-logo, .footer-logo-mobile',
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+          stagger: 0.1,
+        },
+        '-=0.4'
+      )
+
+      // 5. Animate navigation links with stagger
+      .to(
+        '.footer-nav-link',
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: 'power2.out',
+          stagger: 0.1,
+        },
+        '-=0.3'
+      )
+
+      // 6. Animate mobile social icons
+      .to(
+        '.footer-social-mobile',
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.5,
+          ease: 'power2.out',
+          stagger: 0.1,
+        },
+        '-=0.4'
+      );
+
+    // Add hover effects for social links
+    const socialLinks = document.querySelectorAll('.footer-social-link, .footer-social-mobile');
+    socialLinks.forEach((link) => {
+      const linkElement = link as HTMLElement;
+
+      linkElement.addEventListener('mouseenter', () => {
+        gsap.to(linkElement, {
+          scale: 1.05,
+          duration: 0.2,
+          ease: 'power2.out',
+        });
+      });
+
+      linkElement.addEventListener('mouseleave', () => {
+        gsap.to(linkElement, {
+          scale: 1,
+          duration: 0.2,
+          ease: 'power2.out',
+        });
+      });
+    });
+
+    // Add hover effects for navigation links
+    const navLinks = document.querySelectorAll('.footer-nav-link');
+    navLinks.forEach((link) => {
+      const linkElement = link as HTMLElement;
+
+      linkElement.addEventListener('mouseenter', () => {
+        gsap.to(linkElement, {
+          y: -2,
+          duration: 0.2,
+          ease: 'power2.out',
+        });
+      });
+
+      linkElement.addEventListener('mouseleave', () => {
+        gsap.to(linkElement, {
+          y: 0,
+          duration: 0.2,
+          ease: 'power2.out',
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  #footer-section {
+    will-change: transform;
+  }
+
+  .footer-social-link,
+  .footer-logo,
+  .footer-logo-mobile,
+  .footer-nav-link,
+  .footer-social-mobile {
+    will-change: transform, opacity;
+  }
+
+  #footer-divider {
+    will-change: transform, opacity;
+  }
+</style>

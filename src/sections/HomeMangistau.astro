@@ -8,25 +8,28 @@ import Button from '../components/Button.astro';
 import Description from '../components/Description.astro';
 ---
 
-<section class="relative w-full bg-[#3D3F46]">
+<section class="relative w-full bg-[#3D3F46]" id="home-mangistau-section">
   <div
     class="relative z-10 mx-auto flex w-full flex-col items-center justify-center gap-6 px-4 py-16 text-center sm:max-w-7xl lg:px-10 lg:py-24"
+    id="home-mangistau-content"
   >
-    <div>
+    <div id="home-mangistau-title">
       <Title text={'Мангистау — там, где земля встречает небо'} type={'hero'} />
     </div>
 
-    <div>
+    <div id="home-mangistau-description">
       <Description
         text={'Открой для себя завораживающие пейзажи Мангистау — край древних каньонов, мистических скал и бескрайних прибрежных просторов'}
       />
     </div>
 
-    <Button text={'Узнать подробнее'} link="#learn-more" />
+    <div id="home-mangistau-button">
+      <Button text={'Узнать подробнее'} link="#learn-more" />
+    </div>
   </div>
 
-  <div class="hidden grid-cols-1 md:grid md:grid-cols-2">
-    <div class="relative h-[500px] overflow-hidden lg:h-[600px]">
+  <div class="hidden grid-cols-1 md:grid md:grid-cols-2" id="home-mangistau-desktop">
+    <div class="home-mangistau-card relative h-[500px] overflow-hidden lg:h-[600px]" data-card="0">
       <Image
         src={bozzhyraImage}
         alt="Гора Бозжыра"
@@ -37,7 +40,7 @@ import Description from '../components/Description.astro';
       <div class="absolute inset-0 bg-black/40"></div>
 
       <div class="absolute inset-0 flex flex-col justify-end p-6 lg:p-8">
-        <div class="text-white">
+        <div class="home-mangistau-text text-white">
           <h3 class="mb-4 text-3xl leading-tight font-medium uppercase lg:text-4xl">
             Гора Бозжыра
           </h3>
@@ -49,7 +52,7 @@ import Description from '../components/Description.astro';
       </div>
     </div>
 
-    <div class="relative h-[500px] overflow-hidden lg:h-[600px]">
+    <div class="home-mangistau-card relative h-[500px] overflow-hidden lg:h-[600px]" data-card="1">
       <Image
         src={tuzbairImage}
         alt="Гора Тузбаир"
@@ -60,7 +63,7 @@ import Description from '../components/Description.astro';
       <div class="absolute inset-0 bg-black/40"></div>
 
       <div class="absolute inset-0 flex flex-col justify-end p-6 lg:p-8">
-        <div class="text-white">
+        <div class="home-mangistau-text text-white">
           <h3 class="mb-4 text-3xl leading-tight font-medium uppercase lg:text-4xl">
             Гора Тузбаир
           </h3>
@@ -74,9 +77,12 @@ import Description from '../components/Description.astro';
   </div>
 
   <!-- Mobile layout (less than md) -->
-  <div class="px-4 pb-8 md:hidden">
+  <div class="px-4 pb-8 md:hidden" id="home-mangistau-mobile">
     <div class="grid grid-cols-2 gap-4">
-      <div class="relative h-[240px] overflow-hidden rounded-2xl">
+      <div
+        class="home-mangistau-mobile-card relative h-[240px] overflow-hidden rounded-2xl"
+        data-mobile-card="0"
+      >
         <Image
           src={bozzhyraImage}
           alt="Гора Бозжыра"
@@ -85,13 +91,16 @@ import Description from '../components/Description.astro';
         />
         <div class="absolute inset-0 bg-black/30"></div>
         <div class="absolute inset-0 flex flex-col justify-end p-4">
-          <div class="text-white">
+          <div class="home-mangistau-mobile-text text-white">
             <h3 class="text-lg leading-tight font-medium uppercase">Гора Бозжыра</h3>
           </div>
         </div>
       </div>
 
-      <div class="relative h-[240px] overflow-hidden rounded-2xl">
+      <div
+        class="home-mangistau-mobile-card relative h-[240px] overflow-hidden rounded-2xl"
+        data-mobile-card="1"
+      >
         <Image
           src={tuzbairImage}
           alt="Гора Тузбаир"
@@ -100,7 +109,7 @@ import Description from '../components/Description.astro';
         />
         <div class="absolute inset-0 bg-black/30"></div>
         <div class="absolute inset-0 flex flex-col justify-end p-4">
-          <div class="text-white">
+          <div class="home-mangistau-mobile-text text-white">
             <h3 class="text-lg leading-tight font-medium uppercase">Гора Тузбаир</h3>
           </div>
         </div>
@@ -108,3 +117,100 @@ import Description from '../components/Description.astro';
     </div>
   </div>
 </section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  // Register ScrollTrigger plugin
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Wait for DOM to be fully loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    // Set initial states - very simple
+    gsap.set('#home-mangistau-title h1', {
+      opacity: 0,
+      y: 20,
+    });
+
+    gsap.set('#home-mangistau-description', {
+      opacity: 0,
+      y: 15,
+    });
+
+    gsap.set('#home-mangistau-button', {
+      opacity: 0,
+      y: 15,
+    });
+
+    gsap.set('.home-mangistau-card', {
+      opacity: 0,
+      y: 30,
+    });
+
+    gsap.set('.home-mangistau-mobile-card', {
+      opacity: 0,
+      y: 20,
+    });
+
+    // Create simple timeline with ScrollTrigger
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#home-mangistau-section',
+        start: 'top 80%',
+        end: 'bottom 20%',
+        toggleActions: 'play none none reverse',
+      },
+    });
+
+    // Simple animation sequence
+    tl.to('#home-mangistau-title h1', {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: 'power2.out',
+    })
+      .to(
+        '#home-mangistau-description',
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: 'power2.out',
+        },
+        '-=0.3'
+      )
+      .to(
+        '#home-mangistau-button',
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: 'power2.out',
+        },
+        '-=0.2'
+      )
+      .to(
+        '.home-mangistau-card, .home-mangistau-mobile-card',
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+          stagger: 0.1,
+        },
+        '-=0.2'
+      );
+  });
+</script>
+
+<style>
+  #home-mangistau-section {
+    will-change: transform;
+  }
+
+  .home-mangistau-card,
+  .home-mangistau-mobile-card {
+    will-change: transform, opacity;
+  }
+</style>

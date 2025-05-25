@@ -25,22 +25,27 @@ const placeCards = [
 
 <section
   class="flex w-full flex-col items-center justify-center gap-10 bg-white px-4 py-16 text-center"
+  id="cta-section"
 >
-  <div class="flex flex-col gap-6">
+  <div class="flex flex-col gap-6" id="cta-content">
     <div class="flex flex-col gap-4">
       <h1
         class={`text-[#3D3F46] uppercase w-full text-4xl md:text-5xl 2xl:text-6xl font-medium leading-[103%] tracking-[-1.1%]`}
+        id="cta-title"
       >
         Не пропусти лучшие места Актау!
       </h1>
 
-      <h2 class="mx-auto max-w-[700px] tracking-[-1.1%] text-[#3D3F46] md:text-xl lg:text-2xl">
+      <h2
+        class="mx-auto max-w-[700px] tracking-[-1.1%] text-[#3D3F46] md:text-xl lg:text-2xl"
+        id="cta-subtitle"
+      >
         Открой для себя живописные пляжи, загадочные скалы и уникальные достопримечательности этого
         приморского города
       </h2>
     </div>
 
-    <button class="mx-auto inline-flex cursor-pointer">
+    <button class="mx-auto inline-flex cursor-pointer" id="cta-button">
       <a
         class="rounded-full border-[#3D3F46] bg-[#3D3F46] px-8 py-3 text-lg font-medium text-white uppercase transition-colors duration-300 hover:text-white"
       >
@@ -49,17 +54,20 @@ const placeCards = [
     </button>
   </div>
 
-  <div class="grid w-full grid-cols-2 gap-4 lg:max-h-[666px] lg:grid-cols-3">
+  <div class="grid w-full grid-cols-2 gap-4 lg:max-h-[666px] lg:grid-cols-3" id="cta-grid">
     {
       placeCards.map((place, index) => (
-        <div class={`relative overflow-hidden ${index === 2 ? 'col-span-2 lg:col-span-1' : ''}`}>
+        <div
+          class={`cta-card relative overflow-hidden ${index === 2 ? 'col-span-2 lg:col-span-1' : ''}`}
+          data-card-index={index}
+        >
           <Image
             src={place.image}
             alt={place.alt}
-            class={`w-full scale-[101%] rounded-2xl object-cover ${index === 0 ? 'object-top' : ''} ${index === 1 ? 'object-center' : ''} ${index === 2 ? 'object-bottom' : ''} ${index === 2 ? 'h-[200px] sm:h-[333px] lg:h-full' : 'h-[200px] sm:h-[333px] lg:h-full'}`}
+            class={`cta-image w-full scale-[101%] rounded-2xl object-cover ${index === 0 ? 'object-top' : ''} ${index === 1 ? 'object-center' : ''} ${index === 2 ? 'object-bottom' : ''} ${index === 2 ? 'h-[200px] sm:h-[333px] lg:h-full' : 'h-[200px] sm:h-[333px] lg:h-full'}`}
             quality={100}
           />
-          <div class="absolute bottom-0 left-0 mx-auto w-full p-2 sm:p-6">
+          <div class="cta-text absolute bottom-0 left-0 mx-auto w-full p-2 sm:p-6">
             <h3 class="text-center text-base font-medium text-white uppercase sm:text-xl md:text-2xl">
               {place.title}
             </h3>
@@ -69,3 +77,200 @@ const placeCards = [
     }
   </div>
 </section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  // Register ScrollTrigger plugin
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Wait for DOM to be fully loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    // Set initial states for content elements
+    gsap.set('#cta-title', {
+      opacity: 0,
+      y: 30,
+    });
+
+    gsap.set('#cta-subtitle', {
+      opacity: 0,
+      y: 20,
+    });
+
+    gsap.set('#cta-button', {
+      opacity: 0,
+      y: 20,
+    });
+
+    // Set initial clip-path states for images with different reveal patterns
+    gsap.set('.cta-card[data-card-index="0"] .cta-image', {
+      clipPath: 'circle(0% at 50% 50%)', // Circle expand from center
+    });
+
+    gsap.set('.cta-card[data-card-index="1"] .cta-image', {
+      clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)', // Left to right wipe
+    });
+
+    gsap.set('.cta-card[data-card-index="2"] .cta-image', {
+      clipPath: 'polygon(50% 0%, 50% 0%, 50% 100%, 50% 100%)', // Center expand horizontally
+    });
+
+    // Set initial states for text overlays
+    gsap.set('.cta-text', {
+      opacity: 0,
+      y: 20,
+    });
+
+    // Create main timeline with ScrollTrigger
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#cta-section',
+        start: 'top 75%',
+        end: 'bottom 25%',
+        toggleActions: 'play none none reverse',
+      },
+    });
+
+    // Animation sequence
+    tl
+      // 1. Animate content first
+      .to('#cta-title', {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+      })
+      .to(
+        '#cta-subtitle',
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+        },
+        '-=0.4'
+      )
+      .to(
+        '#cta-button',
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+        },
+        '-=0.3'
+      )
+
+      // 2. Animate images with different clip-path reveals
+      // First image: Circle expand
+      .to(
+        '.cta-card[data-card-index="0"] .cta-image',
+        {
+          clipPath: 'circle(150% at 50% 50%)',
+          duration: 1.2,
+          ease: 'power2.out',
+        },
+        '-=0.2'
+      )
+
+      // Second image: Left to right wipe
+      .to(
+        '.cta-card[data-card-index="1"] .cta-image',
+        {
+          clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+          duration: 1,
+          ease: 'power2.out',
+        },
+        '-=0.8'
+      )
+
+      // Third image: Center expand horizontally
+      .to(
+        '.cta-card[data-card-index="2"] .cta-image',
+        {
+          clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+          duration: 1.1,
+          ease: 'power2.out',
+        },
+        '-=0.6'
+      )
+
+      // 3. Animate text overlays with stagger
+      .to(
+        '.cta-text',
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          stagger: {
+            amount: 0.4,
+            from: 'start',
+          },
+        },
+        '-=0.5'
+      );
+
+    // Add hover effects for cards
+    const cards = document.querySelectorAll('.cta-card');
+    cards.forEach((card) => {
+      const cardElement = card as HTMLElement;
+      const image = cardElement.querySelector('.cta-image') as HTMLElement;
+
+      cardElement.addEventListener('mouseenter', () => {
+        gsap.to(image, {
+          scale: 1.05,
+          duration: 0.4,
+          ease: 'power2.out',
+        });
+      });
+
+      cardElement.addEventListener('mouseleave', () => {
+        gsap.to(image, {
+          scale: 1.01,
+          duration: 0.4,
+          ease: 'power2.out',
+        });
+      });
+    });
+
+    // Add button hover animation
+    const button = document.querySelector('#cta-button');
+    if (button) {
+      button.addEventListener('mouseenter', () => {
+        gsap.to(button, {
+          scale: 1.05,
+          duration: 0.2,
+          ease: 'power2.out',
+        });
+      });
+
+      button.addEventListener('mouseleave', () => {
+        gsap.to(button, {
+          scale: 1,
+          duration: 0.2,
+          ease: 'power2.out',
+        });
+      });
+    }
+  });
+</script>
+
+<style>
+  .cta-card {
+    will-change: transform;
+  }
+
+  .cta-image {
+    will-change: clip-path, transform;
+  }
+
+  .cta-text {
+    will-change: transform, opacity;
+  }
+
+  #cta-section {
+    will-change: transform;
+  }
+</style>
