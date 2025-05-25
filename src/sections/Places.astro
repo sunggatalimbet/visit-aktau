@@ -11,6 +11,7 @@ import higlightsImage3 from '../images/highlights-image-3.jpg';
 import Selectors from '../components/Selectors.astro';
 
 import { routemapSelectors } from '../shared/constants';
+import Button from '../components/Button.astro';
 
 const placesImages = [
   {
@@ -79,6 +80,11 @@ const placesImages = [
       gsap.set('#places-slider', {
         opacity: 0,
         y: 30,
+      });
+
+      gsap.set('#places-button button', {
+        opacity: 0,
+        y: 20,
       });
 
       gsap.set('.places-decorative-line line', {
@@ -177,6 +183,18 @@ const placesImages = [
             ease: 'power2.out',
           },
           '-=0.3'
+        )
+
+        // 8. Animate the button
+        .to(
+          '#places-button button',
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+          },
+          '-=0.4'
         );
 
       // Add interactive hover effects for selector buttons
@@ -186,7 +204,7 @@ const placesImages = [
 
         buttonElement.addEventListener('mouseenter', () => {
           gsap.to(buttonElement, {
-            scale: 1.05,
+            scale: 1.01,
             duration: 0.2,
             ease: 'power2.out',
           });
@@ -200,6 +218,28 @@ const placesImages = [
           });
         });
       });
+
+      // Add hover effects for the main button
+      const mainButton = document.querySelector('#places-button button');
+      if (mainButton) {
+        const buttonElement = mainButton as HTMLElement;
+
+        buttonElement.addEventListener('mouseenter', () => {
+          gsap.to(buttonElement, {
+            scale: 1.01,
+            duration: 0.2,
+            ease: 'power2.out',
+          });
+        });
+
+        buttonElement.addEventListener('mouseleave', () => {
+          gsap.to(buttonElement, {
+            scale: 1,
+            duration: 0.2,
+            ease: 'power2.out',
+          });
+        });
+      }
     });
   </script>
 
@@ -219,6 +259,10 @@ const placesImages = [
     }
 
     #places-selectors button {
+      will-change: transform, opacity;
+    }
+
+    #places-button {
       will-change: transform, opacity;
     }
   </style>
@@ -269,6 +313,10 @@ const placesImages = [
         <Description
           text={'Актау - это единственный город с улицами без названий. Вместо них, используются микрорайоны и номера домов'}
         />
+      </div>
+
+      <div class="mt-2 flex w-full justify-start" id="places-button">
+        <Button text={'Узнать подробнее'} link="/bozzhyra" styles="bg-transparent! text-white" />
       </div>
     </div>
 

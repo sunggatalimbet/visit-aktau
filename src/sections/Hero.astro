@@ -8,22 +8,34 @@ import Button from '../components/Button.astro';
 ---
 
 <section class="relative h-screen w-full overflow-hidden sm:h-auto" id="hero-section">
+  <!-- Loading overlay -->
+  <div id="hero-loading" class="absolute inset-0 z-30 flex items-center justify-center bg-black">
+    <div class="flex flex-col items-center gap-4">
+      <div class="h-12 w-12 animate-spin rounded-full border-4 border-white border-t-transparent">
+      </div>
+      <p class="text-lg text-white">Загрузка...</p>
+    </div>
+  </div>
+
   <!-- Background overlay for fade effect -->
-  <div id="hero-overlay" class="absolute inset-0 z-20 bg-black opacity-100"></div>
+  <div id="hero-overlay" class="absolute inset-0 z-0 bg-black opacity-100"></div>
 
   <Image
     id="hero-image"
     src={heroBackground}
     alt="Mangistau landscape image"
-    class="absolute inset-0 h-full max-h-[1083px] w-full scale-150 object-cover object-top sm:scale-100 sm:object-[80%_20%]"
+    class="absolute inset-0 h-full max-h-[1083px] w-full scale-150 object-cover object-top md:scale-100 md:object-[80%_20%]"
     quality={100}
+    loading="eager"
+    decoding="async"
+    fetchpriority="high"
   />
 
   <div
-    class="relative z-10 flex h-screen max-w-7xl flex-col justify-between gap-6 px-6 py-16 sm:h-auto sm:justify-center sm:py-64 lg:px-10"
+    class="relative z-10 flex h-screen max-w-7xl flex-col justify-between gap-6 px-6 py-16 md:h-auto md:justify-center md:py-64 lg:px-10"
   >
     <div class="flex flex-1 flex-col justify-center gap-4">
-      <div class="w-full sm:w-4/5" id="hero-title-container">
+      <div class="w-full md:w-4/5" id="hero-title-container">
         <Title
           text={'Путешествия по Мангистау — там, где Каспий раскрывает свои тайны'}
           type="hero"
@@ -39,12 +51,12 @@ import Button from '../components/Button.astro';
       </div>
 
       <div id="hero-button-desktop" class="translate-y-4 transform opacity-0">
-        <Button text={'Что посетить?'} link="#destinations" styles="hidden sm:inline-flex" />
+        <Button text={'Что посетить?'} link="#guider-section" styles="hidden sm:inline-flex" />
       </div>
     </div>
 
-    <div id="hero-button-mobile" class="translate-y-4 transform opacity-0">
-      <Button text={'Что посетить?'} link="#destinations" styles="sm:hidden" />
+    <div id="hero-button-mobile" class="mx-auto translate-y-4 transform opacity-0">
+      <Button text={'Что посетить?'} link="#guider-section" styles="sm:hidden inline-flex" />
     </div>
   </div>
 </section>
@@ -54,83 +66,128 @@ import Button from '../components/Button.astro';
 
   // Wait for DOM to be fully loaded
   document.addEventListener('DOMContentLoaded', () => {
-    // Create main timeline
-    const tl = gsap.timeline();
+    const heroImage = document.querySelector('#hero-image img') as HTMLImageElement;
+    const loadingOverlay = document.querySelector('#hero-loading') as HTMLElement;
 
-    // Set initial states
-    gsap.set('#hero-image', {
-      scale: 1.2,
-      transformOrigin: 'center center',
-      filter: 'brightness(0.7)',
-    });
+    // Function to start animations
+    const startAnimations = () => {
+      // Create main timeline
+      const tl = gsap.timeline();
 
-    // Timeline sequence
-    tl
-      // 1. Fade out overlay while revealing and animating background image
-      .to('#hero-overlay', {
-        opacity: 0,
-        duration: 1.5,
-        ease: 'power2.inOut',
-      })
-      .to(
-        '#hero-image',
-        {
-          scale: 1.05,
-          filter: 'brightness(1)',
-          duration: 2,
-          ease: 'power2.out',
-        },
-        '-=1.2'
-      )
+      // Set initial states
+      gsap.set('#hero-image', {
+        scale: 1.2,
+        transformOrigin: 'center center',
+        filter: 'brightness(0.7)',
+      });
 
-      // 2. Animate title with reveal effect
-      .to(
-        '#hero-title-container h1',
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.2,
-          ease: 'power2.out',
-        },
-        '-=0.8'
-      )
+      // Timeline sequence
+      tl
+        // 1. Hide loading overlay first
+        .to('#hero-loading', {
+          opacity: 0,
+          duration: 0.5,
+          ease: 'power2.inOut',
+          onComplete: () => {
+            if (loadingOverlay) {
+              loadingOverlay.style.display = 'none';
+            }
+          },
+        })
 
-      // 3. Animate subtitle with fade in and slide up
-      .to(
-        '#hero-subtitle h2',
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: 'power2.out',
-        },
-        '-=0.4'
-      )
+        // 2. Fade out overlay while revealing and animating background image
+        .to(
+          '#hero-overlay',
+          {
+            opacity: 0,
+            duration: 1.5,
+            ease: 'power2.inOut',
+          },
+          '-=0.2'
+        )
+        .to(
+          '#hero-image',
+          {
+            scale: 1.05,
+            filter: 'brightness(1)',
+            duration: 2,
+            ease: 'power2.out',
+          },
+          '-=1.2'
+        )
 
-      // 4. Animate buttons
-      .to(
-        '#hero-button-desktop, #hero-button-mobile',
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power2.out',
-        },
-        '-=0.6'
-      )
+        // 3. Animate title with reveal effect
+        .to(
+          '#hero-title-container h1',
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1.2,
+            ease: 'power2.out',
+          },
+          '-=0.8'
+        )
 
-      // 5. Subtle continuous background animation
-      .to(
-        '#hero-image',
-        {
-          scale: 1,
-          duration: 8,
-          ease: 'none',
-          repeat: -1,
-          yoyo: true,
-        },
-        '-=0.5'
-      );
+        // 4. Animate subtitle with fade in and slide up
+        .to(
+          '#hero-subtitle h2',
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: 'power2.out',
+          },
+          '-=0.4'
+        )
+
+        // 5. Animate buttons
+        .to(
+          '#hero-button-desktop, #hero-button-mobile',
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power2.out',
+          },
+          '-=0.6'
+        )
+
+        // 6. Subtle continuous background animation
+        .to(
+          '#hero-image',
+          {
+            scale: 1,
+            duration: 8,
+            ease: 'none',
+            repeat: -1,
+            yoyo: true,
+          },
+          '-=0.5'
+        );
+    };
+
+    // Check if image is already loaded
+    if (heroImage && heroImage.complete && heroImage.naturalHeight !== 0) {
+      startAnimations();
+    } else if (heroImage) {
+      // Wait for image to load
+      heroImage.addEventListener('load', startAnimations);
+      heroImage.addEventListener('error', () => {
+        console.warn('Hero image failed to load, starting animations anyway');
+        startAnimations();
+      });
+    } else {
+      // Fallback if image element not found
+      setTimeout(startAnimations, 100);
+    }
+
+    // Fallback timeout in case image takes too long
+    setTimeout(() => {
+      if (loadingOverlay && loadingOverlay.style.display !== 'none') {
+        console.warn('Image loading timeout, starting animations');
+        startAnimations();
+      }
+    }, 5000);
   });
 </script>
 
@@ -141,5 +198,20 @@ import Button from '../components/Button.astro';
 
   #hero-image {
     will-change: transform, filter;
+  }
+
+  #hero-loading {
+    will-change: opacity;
+  }
+
+  /* Loading spinner animation */
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-spin {
+    animation: spin 1s linear infinite;
   }
 </style>
